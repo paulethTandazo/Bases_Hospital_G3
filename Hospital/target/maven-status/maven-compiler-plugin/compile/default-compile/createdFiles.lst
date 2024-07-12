@@ -2,7 +2,6 @@ com\espol\edu\ec\hospital\TratamientoPacienteController.class
 com\espol\edu\ec\hospital\EntornoDoctorController.class
 com\espol\edu\ec\hospital\ProbarConexion.class
 com\espol\edu\ec\hospital\DoctorLoginController.class
-com\espol\edu\ec\hospital\IniciarSesionController.class
 module-info.class
 com\espol\edu\ec\hospital\App.class
 com\espol\edu\ec\hospital\ConexionSql.class

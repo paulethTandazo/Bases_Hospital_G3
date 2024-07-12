@@ -20,6 +20,12 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+        
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.32</version> <!-- Asegúrate de usar la última versión estable -->
+    </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -14,10 +14,14 @@ import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 public class PacienteLoginController {
 
@@ -47,8 +51,15 @@ public class PacienteLoginController {
 
                 if (result) {
                     showConfirmationAlert("El usuario es correcto, Ingresando a la aplicación...");
-                    // Cambiar a la vista de paciente
-                    App.setRoot("TratamientoPaciente");
+                    // Cambia a la vista de información del paciente
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("InformacionPaciente.fxml"));
+                    Parent root = loader.load();
+                    InformacionPacienteController controller = loader.getController();
+                    controller.setCedula(Integer.parseInt(Cedula.getText()));
+
+                    Stage stage = (Stage) Ingresar.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
                 } else {
                     showErrorAlert("El usuario o la contraseña son incorrectos");
                     Cedula.clear();

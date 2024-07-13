@@ -127,6 +127,7 @@ END //
 DELIMITER ;
 
 
+SELECT * FROM Paciente WHERE Cedula=0950022434;
 
 select * from Paciente;
 select * from Doctor;

@@ -10,19 +10,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class DoctorLoginController {
 
     @FXML
     private Button Ingresar;
     @FXML
+    private VBox PantallaDoctorBienvenida;
+    @FXML
     private Button BotonRegresar;
     @FXML
     private TextField Cedula;
-
     @FXML
     private PasswordField contrasenia;
 
@@ -43,8 +50,16 @@ public class DoctorLoginController {
 
                 if (result) {
                     showConfirmationAlert("El usuario es correcto, Ingresando a la aplicación...");
-                    // Cambiar a la vista de doctor
-                    App.setRoot("EntornoDoctor");
+                    // Cambiar a la vista de doctor con la cédula
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
+                    Parent root = loader.load();
+
+                    EntornoDoctorController controller = loader.getController();
+                    controller.setCedula(Integer.parseInt(Cedula.getText()));
+
+                    Stage stage = (Stage) PantallaDoctorBienvenida.getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
                 } else {
                     showErrorAlert("El usuario o la contraseña son incorrectos");
                     Cedula.clear();
@@ -56,7 +71,8 @@ public class DoctorLoginController {
             }
         }
     }
-@FXML
+
+    @FXML
     private void handleBack() {
         try {
             App.setRoot("TipoUsuario");
@@ -64,6 +80,7 @@ public class DoctorLoginController {
             showErrorAlert("Error al cargar la vista de selección de usuario: " + e.getMessage());
         }
     }
+
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);

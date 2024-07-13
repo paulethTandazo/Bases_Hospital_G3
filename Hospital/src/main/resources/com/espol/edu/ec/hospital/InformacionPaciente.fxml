@@ -115,7 +115,7 @@
                   </GridPane>
                </children>
                <padding>
-                  <Insets left="20.0" top="80.0" />
+                  <Insets left="20.0" top="70.0" />
                </padding>
             </VBox>
          </children>

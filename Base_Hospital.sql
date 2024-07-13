@@ -150,16 +150,21 @@ BEGIN
 END //
 
 DELIMITER ;
+ALTER TABLE Especialidades RENAME TO Experiencia;
 
 
 SELECT * FROM Paciente WHERE Cedula=0950022434;
+select * from Doctor where cedula=0702964545;
+select * from Experiencia where Doctor_id='D00000001';
+SELECT * FROM Especializacion WHERE Especializacion_id = 'SP0000001';
 
 select * from Paciente;
 select * from Doctor;
 select * from Especializacion;
-select * from Especialidades;
+select * from Experiencia;
 select * from Medicamento;
 drop table Paciente;
 drop table Doctor;
+drop table Especializacion;
 drop table Medicamento;
 drop table SPECIALIZES;

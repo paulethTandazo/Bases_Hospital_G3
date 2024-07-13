@@ -53,9 +53,9 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="163.0" prefWidth="316.0" style="-fx-background-color: FFFF;">
          <children>
-            <ImageView fitHeight="178.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="183.0" fitWidth="197.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../Imagenes/IniciarSesion.png" />
+                  <Image url="@../../../../../Imagenes/Imagen2Login.png" />
                </image>
             </ImageView>
          </children>

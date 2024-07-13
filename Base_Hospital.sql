@@ -32,13 +32,38 @@ Comenzando Insercciones de datos en la tabla pacientes
 */
 INSERT INTO Paciente VALUES
 ('P00000001',0950022434,'root','Pauleth', 'Tandazo',22, STR_TO_DATE('2002-07-23', '%Y-%m-%d'), 'Centro');
-
+INSERT INTO Paciente VALUES
+('P00000002',0950022433,'shaggy123','Domenica', 'Moran',21,STR_TO_DATE('2003-05-04', '%Y-%m-%d'), 'Mucho Lote 2','Paciente');
 /*
 Comenzando Insercciones de datos en la tabla doctores
 */
 INSERT INTO Doctor VALUES
 ('D00000001',0702964545,'admin','Melanie','Briones');
 
+CREATE TABLE Especializacion
+    (Especializacion_id	 CHAR(9)     NOT NULL,
+     nombre           	 VARCHAR(30) NOT NULL,
+     Descripcion       	 VARCHAR(50) NOT NUll,
+     PRIMARY KEY(Especializacion_id));
+CREATE TABLE Especialidades
+    (Doctor_ID      CHAR(9)     NOT NULL,
+     Spec_ID        CHAR(9)     NOT NULL,
+     Years_exp      INT         NOT NULL,
+     PRIMARY KEY (Doctor_ID, Spec_ID),
+     FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_id ) ON DELETE CASCADE,
+     FOREIGN KEY (Spec_ID)   REFERENCES Especializacion(Especializacion_id) ON DELETE CASCADE);
+  /*
+Comenzando Insercciones de datos en la tabla Especializacion
+*/ 
+INSERT INTO Especializacion VALUES ('SP0000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos');
+INSERT INTO Especialidades VALUES ('D00000001', 'SP0000001', 2);
+
+
+/*
+Comenzando Insercciones de datos en la tabla Especialidades
+*/
+
+  
 /*
 Procedimiento almacenado Paciente
 */
@@ -131,7 +156,10 @@ SELECT * FROM Paciente WHERE Cedula=0950022434;
 
 select * from Paciente;
 select * from Doctor;
+select * from Especializacion;
+select * from Especialidades;
 select * from Medicamento;
 drop table Paciente;
 drop table Doctor;
 drop table Medicamento;
+drop table SPECIALIZES;

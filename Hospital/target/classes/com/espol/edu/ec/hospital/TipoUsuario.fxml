@@ -22,20 +22,20 @@
             <Insets bottom="11.0" />
          </padding>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="CENTER" prefHeight="210.0" prefWidth="314.0">
          <children>
             <Button fx:id="BotonDoctor" mnemonicParsing="false" onAction="#handleDoctorLogin" style="-fx-background-color: FFFF;">
                <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="159.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Imagenes/PacientePrueba.png" />
+                        <Image url="@../../../../../Imagenes/Imagen2Login.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Doctor">
+                  <Label text="Doctor" textFill="#2da1e0">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -53,14 +53,14 @@
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Imagenes/PacienteMarco.png" />
+                        <Image url="@../../../../../Imagenes/ImagenLogin.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Paciente">
+                  <Label text="Paciente" textFill="#2da1e0">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

@@ -21,7 +21,7 @@
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Imagenes/boton-de-rebobinado.png" />
+                              <Image url="@../../../../../Imagenes/flecha-izquierda.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -33,7 +33,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="90.0" prefWidth="202.0">
                <children>
-                  <Label text="Bienvenido" textFill="BLUEVIOLET">
+                  <Label text="Bienvenido" textFill="#2da1e0">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>
@@ -49,14 +49,14 @@
          <children>
             <ImageView fitHeight="181.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../Imagenes/IniciarSesion.png" />
+                  <Image url="@../../../../../Imagenes/ImagenLogin.png" />
                </image>
             </ImageView>
          </children>
       </VBox>
       <VBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: FFFF;">
          <children>
-            <Label text="Cédula" textFill="BLUEVIOLET">
+            <Label text="Cédula" textFill="#2da1e0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -76,7 +76,7 @@
       </VBox>
       <VBox prefHeight="28.0" prefWidth="332.0">
          <children>
-            <Label text="Contraseña" textFill="BLUEVIOLET">
+            <Label text="Contraseña" textFill="#2da1e0">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -99,7 +99,7 @@
       </VBox>
       <VBox alignment="CENTER" prefHeight="96.0" prefWidth="332.0">
          <children>
-            <Button fx:id="Ingresar" mnemonicParsing="false" onAction="#comprobarUsuario" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #8A2BE2;" text="Ingresar" textFill="WHITE">
+            <Button fx:id="Ingresar" mnemonicParsing="false" onAction="#comprobarUsuario" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #2da1e0;" text="Ingresar" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

@@ -4,23 +4,19 @@
  */
 package com.espol.edu.ec.hospital;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+
 
 /**
  * FXML Controller class
  *
  * @author dell
  */
-public class EntornoDoctorController implements Initializable {
+public class EntornoDoctorController  {
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+  @FXML
+    private void handleSalir() {
+        Platform.exit();
+    }
 }

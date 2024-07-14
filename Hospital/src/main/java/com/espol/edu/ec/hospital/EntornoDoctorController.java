@@ -22,7 +22,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
+/**
+ * FXML Controller class
+ *
+ * @author Pauleth
+ */
 public class EntornoDoctorController {
 
     private int cedula;

@@ -7,18 +7,13 @@ package com.espol.edu.ec.hospital;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
  *
- * @author dell
+ * @author Pauleth
  */
 public class TipoUsuarioController {
-@FXML
-private Button BotonDoctor;
-@FXML
-private Button BotonPaciente;
  @FXML
     public void handleDoctorLogin() {
         try {

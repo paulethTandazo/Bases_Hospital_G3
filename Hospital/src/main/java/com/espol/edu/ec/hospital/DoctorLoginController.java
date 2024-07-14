@@ -19,7 +19,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * FXML Controller class
+ *
+ * @author Pauleth
+ */
 public class DoctorLoginController {
 
     @FXML

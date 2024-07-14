@@ -30,7 +30,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
+/**
+ * FXML Controller class
+ *
+ * @author Pauleth
+ */
 public class InformacionPacienteController {
 
     @FXML

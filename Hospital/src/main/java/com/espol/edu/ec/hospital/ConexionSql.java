@@ -19,6 +19,8 @@ public class ConexionSql {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            // No es un método seguro porque queda muy expuesta nuestra contraseña de la base de datos
+            //pero es una de las formas para acceder a nuestra base de datos
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Base_Hospital", "root", "admin");
             System.out.println("Se conecto a la base de datos");
         } catch (Exception e) {

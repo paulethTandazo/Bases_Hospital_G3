@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author dell
+ * @author Pauleth
  */
 public class TratamientoPacienteController {
 

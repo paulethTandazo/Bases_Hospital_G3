@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author dell
+ * @author Pauleth
  */
 public class MedicamentoVentanaController implements Initializable {
 

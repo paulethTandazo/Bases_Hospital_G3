@@ -4,7 +4,6 @@
  */
 package Doctor;
 
-import Paciente.InformacionPersonal;
 import com.espol.edu.ec.hospital.ConexionSql;
 import java.sql.CallableStatement;
 import java.sql.Connection;

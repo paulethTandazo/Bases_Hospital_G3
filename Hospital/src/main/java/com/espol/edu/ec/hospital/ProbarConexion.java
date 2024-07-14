@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author dell
+ * @author Pauleth
  */
 public class ProbarConexion {
 

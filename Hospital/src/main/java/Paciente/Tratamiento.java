@@ -6,7 +6,7 @@ package Paciente;
 
 /**
  *
- * @author dell
+ * @author Pauleth
  */
 public class Tratamiento {
     private char Codigo;

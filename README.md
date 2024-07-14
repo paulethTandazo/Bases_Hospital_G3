@@ -20,8 +20,8 @@ and manage hospital data efficiently.
 2. Set up the MySQL database using the provided SQL scripts.
 3. Run the application from your IDE (e.g., NetBeans, IntelliJ IDEA) or from the command line.
 ## Database Connection
-Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
-
+1. Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
+   ```sh
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>

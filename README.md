@@ -22,7 +22,6 @@ and manage hospital data efficiently.
 ## Database Connection
 1. Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
  ```markdown
-```xml
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>

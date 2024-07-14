@@ -41,7 +41,7 @@
                      <children>
                         <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="    Pacientes" textFill="WHITE">
                            <graphic>
-                              <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="44.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../../Imagenes/paciente%20(1).png" />
                                  </image>

@@ -3,6 +3,7 @@ package com.espol.edu.ec.hospital;
 import Doctor.InformacionDoctor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import javafx.application.Platform;
@@ -114,66 +115,76 @@ public class EntornoDoctorController {
     }
 
     @FXML
-private void handleGuardar() {
-    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-    alert.setTitle("Confirmación de Guardado");
-    alert.setHeaderText("¿Estás seguro de que deseas guardar los cambios?");
-    alert.setContentText("Presiona continuar para guardar o cancelar para regresar.");
+    private void handleGuardar() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación de Guardado");
+        alert.setHeaderText("¿Estás seguro de que deseas guardar los cambios?");
+        alert.setContentText("Presiona continuar para guardar o cancelar para regresar.");
 
-    ButtonType buttonTypeContinuar = new ButtonType("Continuar");
-    ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
+        ButtonType buttonTypeContinuar = new ButtonType("Continuar");
+        ButtonType buttonTypeCancelar = new ButtonType("Cancelar");
 
-    alert.getButtonTypes().setAll(buttonTypeContinuar, buttonTypeCancelar);
+        alert.getButtonTypes().setAll(buttonTypeContinuar, buttonTypeCancelar);
 
-    Optional<ButtonType> result = alert.showAndWait();
-    if (result.get() == buttonTypeContinuar) {
-        String nombre = nombreField.getText();
-        String apellido = apellidoField.getText();
-        String especializacion = especializacionField.getText();
-        String descripcionCargo = descripcionField.getText();
-        int aniosExperiencia = Integer.parseInt(aniosExperienciaField.getText());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeContinuar) {
+            String nombre = nombreField.getText();
+            String apellido = apellidoField.getText();
+            String especializacion = especializacionField.getText();
+            String descripcionCargo = descripcionField.getText();
+            int aniosExperiencia = Integer.parseInt(aniosExperienciaField.getText());
 
-        try (Connection con = new ConexionSql().estableceConexion()) {
-            // Actualizar información del doctor
-            String updateDoctorQuery = "UPDATE Doctor SET Nombre = ?, Apellido = ? WHERE Cedula = ?";
-            PreparedStatement psDoctor = con.prepareStatement(updateDoctorQuery);
-            psDoctor.setString(1, nombre);
-            psDoctor.setString(2, apellido);
-            psDoctor.setInt(3, cedula);
-            int rowsAffectedDoctor = psDoctor.executeUpdate();
+            try (Connection con = new ConexionSql().estableceConexion()) {
+                // Actualizar información del doctor
+                String updateDoctorQuery = "UPDATE Doctor SET Nombre = ?, Apellido = ? WHERE Cedula = ?";
+                PreparedStatement psDoctor = con.prepareStatement(updateDoctorQuery);
+                psDoctor.setString(1, nombre);
+                psDoctor.setString(2, apellido);
+                psDoctor.setInt(3, cedula);
+                int rowsAffectedDoctor = psDoctor.executeUpdate();
 
-            // Actualizar información de la especialización
-            String updateExpQuery = "UPDATE Especializacion SET Descripcion = ? WHERE Especializacion_id = (SELECT Spec_ID FROM Especialidades WHERE Doctor_ID = ?)";
-            PreparedStatement psExp = con.prepareStatement(updateExpQuery);
-            psExp.setString(1, descripcionCargo);
-            psExp.setString(2, doctorIdField.getText());
-            int rowsAffectedExp = psExp.executeUpdate();
+                // Obtener el ID de la especialización desde la tabla Experiencia
+                String getSpecIdQuery = "SELECT Spec_ID FROM Experiencia WHERE Doctor_ID = ?";
+                PreparedStatement psGetSpecId = con.prepareStatement(getSpecIdQuery);
+                psGetSpecId.setString(1, doctorIdField.getText());
+                ResultSet rs = psGetSpecId.executeQuery();
+                String specId = null;
+                if (rs.next()) {
+                    specId = rs.getString("Spec_ID");
+                }
 
-            // Actualizar años de experiencia
-            String updateYearsExpQuery = "UPDATE Especialidades SET Years_exp = ? WHERE Doctor_ID = ?";
-            PreparedStatement psYearsExp = con.prepareStatement(updateYearsExpQuery);
-            psYearsExp.setInt(1, aniosExperiencia);
-            psYearsExp.setString(2, doctorIdField.getText());
-            int rowsAffectedYearsExp = psYearsExp.executeUpdate();
+                // Actualizar la descripción y nombre de la especialización en la tabla Especializacion
+                String updateEspecializacionQuery = "UPDATE Especializacion SET Descripcion = ?, Nombre = ? WHERE Especializacion_id = ?";
+                PreparedStatement psEspecializacion = con.prepareStatement(updateEspecializacionQuery);
+                psEspecializacion.setString(1, descripcionCargo);
+                psEspecializacion.setString(2, especializacion);
+                psEspecializacion.setString(3, specId);
+                int rowsAffectedEspecializacion = psEspecializacion.executeUpdate();
 
-            if (rowsAffectedDoctor > 0 && rowsAffectedExp > 0 && rowsAffectedYearsExp > 0) {
-                showConfirmationAlert("Información actualizada correctamente.");
-                nombreField.setEditable(false);
-                apellidoField.setEditable(false);
-                especializacionField.setEditable(false);
-                descripcionField.setEditable(false);
-                aniosExperienciaField.setEditable(false);
+                // Actualizar años de experiencia en la tabla Experiencia
+                String updateYearsExpQuery = "UPDATE Experiencia SET Years_exp = ? WHERE Doctor_ID = ?";
+                PreparedStatement psYearsExp = con.prepareStatement(updateYearsExpQuery);
+                psYearsExp.setInt(1, aniosExperiencia);
+                psYearsExp.setString(2, doctorIdField.getText());
+                int rowsAffectedYearsExp = psYearsExp.executeUpdate();
 
-                bienvenidaLabel.setText("Bienvenid@ de nuevo, " + nombre);
-            } else {
-                showErrorAlert("No se pudo actualizar la información.");
+                if (rowsAffectedDoctor > 0 && rowsAffectedEspecializacion > 0 && rowsAffectedYearsExp > 0) {
+                    showConfirmationAlert("Información actualizada correctamente.");
+                    nombreField.setEditable(false);
+                    apellidoField.setEditable(false);
+                    especializacionField.setEditable(false);
+                    descripcionField.setEditable(false);
+                    aniosExperienciaField.setEditable(false);
+
+                    bienvenidaLabel.setText("Bienvenid@ de nuevo, " + nombre);
+                } else {
+                    showErrorAlert("No se pudo actualizar la información.");
+                }
+            } catch (SQLException e) {
+                showErrorAlert("Error en la base de datos: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            showErrorAlert("Error en la base de datos: " + e.getMessage());
         }
     }
-}
-
 
     private TextField createTextField(String labelText, String valueText, int rowIndex) {
         Label label = new Label(labelText);

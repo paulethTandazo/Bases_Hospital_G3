@@ -13,7 +13,7 @@ and manage hospital data efficiently.
 -  JavaFX SDK
 -  MySQL Database
 -  MySQL Connector for Java
-
+  
 **Steps**
 1. Clone the repository.
    ```sh
@@ -33,4 +33,12 @@ and manage hospital data efficiently.
     <artifactId>mysql-connector-java</artifactId>
     <version>8.0.26</version>
 </dependency>
-  
+
+## Contributing
+Feel free to collaborate on the project; all updates are warmly welcomed. 😺
+- Fork the repository.
+- Create a new branch.
+- Make your changes.
+- Submit a pull request.
+
+

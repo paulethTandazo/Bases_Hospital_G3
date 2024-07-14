@@ -14,10 +14,11 @@ and manage hospital data efficiently.
 -  MySQL Database
 -  MySQL Connector for Java
 **Steps**
-- Clone the repository.
-git clone <repository-url>
-- Set up the MySQL database using the provided SQL scripts.
-- Run the application from your IDE (e.g., NetBeans, IntelliJ IDEA) or from the command line.
+1. Clone the repository.
+   ```sh
+   git clone <repository-url>
+2. Set up the MySQL database using the provided SQL scripts.
+3. Run the application from your IDE (e.g., NetBeans, IntelliJ IDEA) or from the command line.
 ## Database Connection
 Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
 

@@ -24,20 +24,18 @@ and manage hospital data efficiently.
 
 1. Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
 
-```xml
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.26</version>
-</dependency>
-
-
-
-
-
+    ```xml
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.26</version>
+    </dependency>
+    ```
 
 ## Contributing
+
 Feel free to collaborate on the project; all updates are warmly welcomed. 😺
+
 - Fork the repository.
 - Create a new branch.
 - Make your changes.

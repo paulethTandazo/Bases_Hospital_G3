@@ -13,6 +13,7 @@ and manage hospital data efficiently.
 -  JavaFX SDK
 -  MySQL Database
 -  MySQL Connector for Java
+
 **Steps**
 1. Clone the repository.
    ```sh

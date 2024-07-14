@@ -11,7 +11,7 @@ CREATE TABLE Paciente
      Direccion      VARCHAR(50)  	NOT NULL,
      
      PRIMARY KEY(Paciente_id));
-
+     
 CREATE TABLE Doctor
     (Doctor_id  	CHAR(10)     	NOT NULL,
 	 Cedula			INT				NOT NULL,
@@ -52,16 +52,34 @@ CREATE TABLE Especialidades
      PRIMARY KEY (Doctor_ID, Spec_ID),
      FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_id ) ON DELETE CASCADE,
      FOREIGN KEY (Spec_ID)   REFERENCES Especializacion(Especializacion_id) ON DELETE CASCADE);
-  /*
+ CREATE TABLE Departamento
+	(Departamento_id		CHAR(9)		NOT NULL,
+ 	 Nombre_Departamento	VARCHAR(30) 	NOT NULL,
+	 Localizacion			VARCHAR(30)		NOT NULL,
+	 PRIMARY KEY(Departamento_id));
+ CREATE TABLE Asignacion_Departamento
+	 (Asignacion_id			CHAR(9)			NOT NULL,
+	  
+	  Fecha_Asignación 		DATE			NOT NULL,
+      Numero_Habitacion 	INT 			NOT NULL,
+      Fecha_Alta			DATE 			NOT NULL,
+      PRIMARY KEY(Asignacion_id));
+
+ /*
 Comenzando Insercciones de datos en la tabla Especializacion
 */ 
 INSERT INTO Especializacion VALUES ('SP0000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos');
-INSERT INTO Especialidades VALUES ('D00000001', 'SP0000001', 2);
-
 
 /*
-Comenzando Insercciones de datos en la tabla Especialidades
+Cambiando el nombre de la tabla "Especialidades" al de "Experiencia"
 */
+ALTER TABLE Especialidades RENAME TO Experiencia;
+
+/*
+Comenzando Insercciones de datos en la tabla Experiencia, tener en cuanto que la tabla
+"Especialidades" ahora se llama "Experiencia"
+*/
+INSERT INTO Especialidades VALUES ('D00000001', 'SP0000001', 2);
 
   
 /*
@@ -150,9 +168,10 @@ BEGIN
 END //
 
 DELIMITER ;
-ALTER TABLE Especialidades RENAME TO Experiencia;
 
-
+/*
+Comprobando si las querys se realizan con éxito
+*/
 SELECT * FROM Paciente WHERE Cedula=0950022434;
 select * from Doctor where cedula=0702964545;
 select * from Experiencia where Doctor_id='D00000001';
@@ -163,8 +182,3 @@ select * from Doctor;
 select * from Especializacion;
 select * from Experiencia;
 select * from Medicamento;
-drop table Paciente;
-drop table Doctor;
-drop table Especializacion;
-drop table Medicamento;
-drop table SPECIALIZES;

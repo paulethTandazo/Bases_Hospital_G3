@@ -8,8 +8,22 @@ and manage hospital data efficiently.
 ![Pantalla del Paciente](https://i.postimg.cc/9Qq7h3vC/Pantalla-Del-Paciente.png)
 
 ## Installation and Setup
-## Prerequisites
+**Prerequisites**
 -  Java Development Kit (JDK)
 -  JavaFX SDK
 -  MySQL Database
 -  MySQL Connector for Java
+**Steps**
+- Clone the repository.
+git clone <repository-url>
+- Set up the MySQL database using the provided SQL scripts.
+- Run the application from your IDE (e.g., NetBeans, IntelliJ IDEA) or from the command line.
+## Database Connection
+Ensure the MySQL Connector is added to your project dependencies. Example for Maven:
+
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.26</version>
+</dependency>
+  

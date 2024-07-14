@@ -7,7 +7,7 @@ The system allows different types of users (patients, doctors, administrators) t
 and manage hospital data efficiently.
 ## Installation and Setup
 ## Prerequisites
-- ** Java Development Kit (JDK)
-- ** JavaFX SDK
-- ** MySQL Database
-- ** MySQL Connector for Java
+-  Java Development Kit (JDK)
+-  JavaFX SDK
+-  MySQL Database
+-  MySQL Connector for Java

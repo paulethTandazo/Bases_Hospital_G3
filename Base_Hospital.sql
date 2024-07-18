@@ -1,29 +1,25 @@
 create database Base_Hospital;
 use Base_Hospital;
 CREATE TABLE Paciente 
-    (Paciente_id	CHAR(9)		    NOT NULL,
-	 Cedula         INT			    NOT NULL,
-	 Contrasenia	VARCHAR(50)		NOT NULL,
-     Nombre         VARCHAR(50)  	NOT NULL,
-	 Apellido		VARCHAR(50)	 	NOT NULL,
-     Edad           INT          	NOT NULL,
-     Fcumpleanos    DATE         	NOT NULL,
-     Direccion      VARCHAR(50)  	NOT NULL,
+    (Paciente_id CHAR(9) NOT NULL,
+	 Cedula INT NOT NULL,
+	 Contrasenia VARCHAR(50) NOT NULL,
+     Nombre VARCHAR(50) NOT NULL,
+	 Apellido VARCHAR(50) NOT NULL,
+     Edad INT NOT NULL,
+     Fcumpleanos DATE NOT NULL,
+     Direccion VARCHAR(50) NOT NULL,
      
      PRIMARY KEY(Paciente_id));
      
 CREATE TABLE Doctor
-    (Doctor_id  	CHAR(10)     	NOT NULL,
-	 Cedula			INT				NOT NULL,
-     contrasenia	varchar(50)		NOT NULL,
-     Nombre      	VARCHAR(40) 	NOT NULL,
-     Apellido	 	Varchar(50) 	NOT NULL,
+    (Doctor_id CHAR(10) NOT NULL,
+	 Cedula INT	NOT NULL,
+     contrasenia varchar(50) NOT NULL,
+     Nombre VARCHAR(40) NOT NULL,
+     Apellido Varchar(50) NOT NULL,
      PRIMARY KEY (Doctor_id));
-CREATE TABLE Medicamento
-    (id_medicamento  CHAR(10)     	NOT NULL,
-     Nombre          VARCHAR(40) 	NOT NULL,
-     Precio          INT         	NOT NULL,
-     PRIMARY KEY(id_medicamento));
+
 ALTER TABLE Paciente ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Paciente';
 ALTER TABLE Doctor ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Doctor';
 
@@ -41,39 +37,63 @@ INSERT INTO Doctor VALUES
 ('D00000001',0702964545,'admin','Melanie','Briones');
 
 CREATE TABLE Especializacion
-    (Especializacion_id	 CHAR(9)     NOT NULL,
-     nombre           	 VARCHAR(30) NOT NULL,
-     Descripcion       	 VARCHAR(50) NOT NUll,
+    (Especializacion_id	 CHAR(9) NOT NULL,
+     nombre VARCHAR(30) NOT NULL,
+     Descripcion VARCHAR(50) NOT NUll,
      PRIMARY KEY(Especializacion_id));
-CREATE TABLE Especialidades
-    (Doctor_ID      CHAR(9)     NOT NULL,
-     Spec_ID        CHAR(9)     NOT NULL,
-     Years_exp      INT         NOT NULL,
+CREATE TABLE Especialidades 
+    (Doctor_ID CHAR(9) NOT NULL,
+     Spec_ID CHAR(9) NOT NULL,
+     Years_exp INT NOT NULL,
      PRIMARY KEY (Doctor_ID, Spec_ID),
      FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_id ) ON DELETE CASCADE,
      FOREIGN KEY (Spec_ID)   REFERENCES Especializacion(Especializacion_id) ON DELETE CASCADE);
+/*
+Cambiando el nombre de la tabla "Especialidades" al de "Experiencia"
+*/
+ALTER TABLE Especialidades RENAME TO Experiencia;
+/*
+Creando tabla que tiene la relación entre doctor y departamento
+*/
+ create table DoctorxDepartamento (
+	Doctor_id CHAR(9) NOT NULL,
+    Departamento_id CHAR(9) NOT NULL
+ );
+ ALTER TABLE DoctorxDepartamento ADD PRIMARY KEY (Doctor_id,Departamento_id);
+ ALTER TABLE DoctorxDepartamento ADD FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
+ ALTER TABLE DoctorxDepartamento ADD FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
+
+
+
  CREATE TABLE Departamento
 	(Departamento_id		CHAR(9)		NOT NULL,
  	 Nombre_Departamento	VARCHAR(30) 	NOT NULL,
-	 Localizacion			VARCHAR(30)		NOT NULL,
-	 PRIMARY KEY(Departamento_id));
- CREATE TABLE Asignacion_Departamento
-	 (Asignacion_id			CHAR(9)			NOT NULL,
-	  
-	  Fecha_Asignación 		DATE			NOT NULL,
-      Numero_Habitacion 	INT 			NOT NULL,
-      Fecha_Alta			DATE 			NOT NULL,
-      PRIMARY KEY(Asignacion_id));
+	 Localizacion			VARCHAR(30)		NOT NULL
+	);
+ALTER TABLE Departamento ADD PRIMARY KEY (Departamento_id);
+ CREATE TABLE PacientexDepartamento
+	 (Paciente_id CHAR(9) NOT NULL,
+      Departamento_id CHAR (9) NOT NULL,
+	  Fecha_Asignación DATE NOT NULL,
+      Numero_Habitacion INT NOT NULL,
+      Fecha_Alta DATE NOT NULL
+      );
+ALTER TABLE PacientexDepartamento ADD PRIMARY KEY (Paciente_id,Departamento_id);
+ALTER TABLE PacientexDepartamento ADD FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
+ALTER TABLE PacientexDepartamento ADD FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;    
+    
 
+CREATE TABLE Medicamento
+    (id_medicamento  CHAR(10)     	NOT NULL,
+     Nombre          VARCHAR(40) 	NOT NULL,
+     Precio          INT         	NOT NULL,
+     PRIMARY KEY(id_medicamento));
+drop table Medicamento;
  /*
 Comenzando Insercciones de datos en la tabla Especializacion
 */ 
 INSERT INTO Especializacion VALUES ('SP0000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos');
 
-/*
-Cambiando el nombre de la tabla "Especialidades" al de "Experiencia"
-*/
-ALTER TABLE Especialidades RENAME TO Experiencia;
 
 /*
 Comenzando Insercciones de datos en la tabla Experiencia, tener en cuanto que la tabla

@@ -1,6 +1,7 @@
 package com.espol.edu.ec.hospital;
 
 import Doctor.InformacionDoctor;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +9,11 @@ import java.sql.SQLException;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -22,6 +26,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+
 /**
  * FXML Controller class
  *
@@ -238,5 +244,21 @@ public class EntornoDoctorController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void HandlePaciente() {
+        try {
+            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("TratamientoPacientes.fxml"));
+            Parent root = pantallaDoctor.load();
+            TratamientoPacientesController controller = pantallaDoctor.getController();
+            controller.setCedula(this.cedula);
+
+            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        }
     }
 }

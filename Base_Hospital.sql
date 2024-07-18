@@ -65,18 +65,18 @@ Departamento_id CHAR(9) NOT NULL
 
 
  CREATE TABLE Departamento
-	(Departamento_id		CHAR(9)		NOT NULL,
- 	 Nombre_Departamento	VARCHAR(30) 	NOT NULL,
-	 Localizacion			VARCHAR(30)		NOT NULL
-	);
+(Departamento_id CHAR(9) NOT NULL,
+Nombre_Departamento	VARCHAR(30) NOT NULL,
+Localizacion VARCHAR(30) NOT NULL
+);
 ALTER TABLE Departamento ADD PRIMARY KEY (Departamento_id);
  CREATE TABLE PacientexDepartamento
-	 (Paciente_id CHAR(9) NOT NULL,
-      Departamento_id CHAR (9) NOT NULL,
-	  Fecha_Asignación DATE NOT NULL,
-      Numero_Habitacion INT NOT NULL,
-      Fecha_Alta DATE NOT NULL
-      );
+(Paciente_id CHAR(9) NOT NULL,
+Departamento_id CHAR (9) NOT NULL,
+Fecha_Asignación DATE NOT NULL,
+Numero_Habitacion INT NOT NULL,
+Fecha_Alta DATE NOT NULL
+);
 ALTER TABLE PacientexDepartamento ADD PRIMARY KEY (Paciente_id,Departamento_id);
 ALTER TABLE PacientexDepartamento ADD FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
 ALTER TABLE PacientexDepartamento ADD FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;    

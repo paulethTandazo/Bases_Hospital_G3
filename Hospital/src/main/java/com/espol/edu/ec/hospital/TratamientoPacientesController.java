@@ -47,7 +47,7 @@ public class TratamientoPacientesController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
             Parent root = loader.load();
 
-            TratamientoPacienteController controller = loader.getController();
+            EntornoDoctorController controller = loader.getController();
             controller.setCedula(this.cedula);
 
             Stage stage = (Stage) VBOXPacientes.getScene().getWindow();

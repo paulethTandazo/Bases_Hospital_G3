@@ -61,7 +61,7 @@
                   </VBox>
                   <VBox prefHeight="95.0" prefWidth="188.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="Departamento" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#HandleDepartamento" style="-fx-background-color: #4DB7E8;" text="Departamento" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

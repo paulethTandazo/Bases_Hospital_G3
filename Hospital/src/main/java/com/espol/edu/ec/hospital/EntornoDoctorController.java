@@ -245,13 +245,27 @@ public class EntornoDoctorController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
     @FXML
     private void HandlePaciente() {
         try {
             FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("TratamientoPacientes.fxml"));
             Parent root = pantallaDoctor.load();
             TratamientoPacientesController controller = pantallaDoctor.getController();
+            controller.setCedula(this.cedula);
+
+            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        }
+    }
+    @FXML
+    private void HandleDepartamento() {
+        try {
+            FXMLLoader pantallaDepartamento = new FXMLLoader(getClass().getResource("TablasPacientes.fxml"));
+            Parent root = pantallaDepartamento.load();
+            TablasPacientesController controller = pantallaDepartamento.getController();
             controller.setCedula(this.cedula);
 
             Stage stage = (Stage) NombreDoctor.getScene().getWindow();

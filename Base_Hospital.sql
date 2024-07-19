@@ -62,13 +62,17 @@ Departamento_id CHAR(9) NOT NULL
  ALTER TABLE DoctorxDepartamento ADD FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
  ALTER TABLE DoctorxDepartamento ADD FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
 
-
+select * from DoctorxDepartamento;
+INSERT INTO DoctorxDepartamento VALUES ('D00000001','DP0000001');
+select*from Departamento;
+select*from Doctor;
 
  CREATE TABLE Departamento
 (Departamento_id CHAR(9) NOT NULL,
 Nombre_Departamento	VARCHAR(30) NOT NULL,
 Localizacion VARCHAR(30) NOT NULL
 );
+INSERT INTO Departamento VALUES ('DP0000001','Departamento Cardiología','Planta A');
 ALTER TABLE Departamento ADD PRIMARY KEY (Departamento_id);
  CREATE TABLE PacientexDepartamento
 (Paciente_id CHAR(9) NOT NULL,

@@ -10,6 +10,8 @@ com\espol\edu\ec\hospital\InformacionPacienteController.class
 com\espol\edu\ec\hospital\EntornoDoctorController.class
 com\espol\edu\ec\hospital\ProbarConexion.class
 com\espol\edu\ec\hospital\MedicamentoVentanaController.class
+Departamento\Departamento.class
 com\espol\edu\ec\hospital\App.class
+com\espol\edu\ec\hospital\TablasPacientesController.class
 com\espol\edu\ec\hospital\PacienteLoginController.class
 Paciente\InformacionPersonal.class

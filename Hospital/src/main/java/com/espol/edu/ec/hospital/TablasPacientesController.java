@@ -27,10 +27,13 @@ public class TablasPacientesController {
 
     @FXML
     private VBox TablaDepartamento;
-    private TableView<Departamento> TablaxDepartamentos = new TableView<>();
+    private TableView<Departamento> TablaxDepartamentos;
 
     @FXML
     private void initialize() {
+         // Crear el TableView solo una vez
+        if (TablaxDepartamentos == null) {
+            TablaxDepartamentos = new TableView<>();
         // Creando las columnas para llenar luego los datos
         TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("ID Departamento");
         colDepartamentoId.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
@@ -44,6 +47,7 @@ public class TablasPacientesController {
         TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
         TablaDepartamento.getChildren().add(TablaxDepartamentos);
     }
+         }
 //metodo para que no duplique info 
 
     private void cargarDatosDepartamento() {

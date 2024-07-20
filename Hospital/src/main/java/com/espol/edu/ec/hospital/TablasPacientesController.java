@@ -1,8 +1,6 @@
 package com.espol.edu.ec.hospital;
 
-
 import Departamento.Departamento;
-import com.espol.edu.ec.hospital.ConexionSql;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,24 +15,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class TablasPacientesController {
+
     private int cedula;
- public void setCedula(int cedula) {
+
+    public void setCedula(int cedula) {
         this.cedula = cedula;
         System.out.println("Cédula recibida: " + cedula); // Debug
-        initialize();
+        cargarDatosDepartamento();
     }
 
     @FXML
     private VBox TablaDepartamento;
-
+    private TableView<Departamento> TablaxDepartamentos=new TableView<>();
+    
     @FXML
     private void initialize() {
-        // Crear el TableView
-        TableView<Departamento> tableView = new TableView<>();
-
-        // Crear las columnas
+        // Creando las columnas para llenar luego los datos
         TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("ID Departamento");
         colDepartamentoId.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
 
@@ -44,31 +41,34 @@ public class TablasPacientesController {
         TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
         colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
 
-        // Agregar las columnas al TableView
-        tableView.getColumns().add(colDepartamentoId);
-        tableView.getColumns().add(colNombre);
-        tableView.getColumns().add(colLocalizacion);
-
-        // Llenar la tabla con datos
-        tableView.setItems(getDepartamentoData());
-
-        // Agregar el TableView al VBox
-        TablaDepartamento.getChildren().add(tableView);
+        TablaxDepartamentos.getColumns().add(colDepartamentoId);
+        TablaxDepartamentos.getColumns().add(colNombre);
+        TablaxDepartamentos.getColumns().add(colLocalizacion);
+        TablaxDepartamentos.setItems(getDepartamentoData());
+        TablaDepartamento.getChildren().add(TablaxDepartamentos);
     }
+//metodo para que no duplique info 
+    private void cargarDatosDepartamento() {
+        if (TablaxDepartamentos == null) {
+            return;
+        }
 
+        // Limpiar los datos
+        TablaxDepartamentos.getItems().clear();
+        TablaxDepartamentos.setItems(getDepartamentoData());
+    }
     private ObservableList<Departamento> getDepartamentoData() {
         ObservableList<Departamento> departamentoList = FXCollections.observableArrayList();
 
         // Conexión a la base de datos y obtención de datos
         try (Connection con = new ConexionSql().estableceConexion()) {
-            String consulta = "SELECT d.Departamento_id, d.Nombre_Departamento, d.Localizacion " +
-                              "FROM Departamento d " +
-                              "JOIN DoctorxDepartamento dx ON d.Departamento_id = dx.Departamento_id " +
-                              "WHERE dx.Doctor_id = ?";
-            // Asegúrate de pasar el ID del doctor como parámetro
-            String doctorId = "ID_DEL_DOCTOR"; // Reemplaza con el ID del doctor real
+            String consulta = "SELECT d.Departamento_id, d.Nombre_Departamento, d.Localizacion "
+                    + "FROM Departamento d "
+                    + "JOIN DoctorxDepartamento dx ON d.Departamento_id = dx.Departamento_id "
+                    + "JOIN Doctor doc ON dx.Doctor_id = doc.Doctor_id "
+                    + "WHERE doc.Cedula = ?";
             PreparedStatement st = con.prepareStatement(consulta);
-            st.setString(1, doctorId);
+            st.setInt(1, this.cedula);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -89,5 +89,5 @@ public class TablasPacientesController {
     private void handleSalir() {
         Platform.exit();
     }
-    
+
 }

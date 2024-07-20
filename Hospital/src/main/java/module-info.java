@@ -5,5 +5,7 @@ module com.espol.edu.ec.hospital {
     requires java.sql;
 
     opens com.espol.edu.ec.hospital to javafx.fxml;
+        opens Departamento to javafx.base;
+
     exports com.espol.edu.ec.hospital;
 }

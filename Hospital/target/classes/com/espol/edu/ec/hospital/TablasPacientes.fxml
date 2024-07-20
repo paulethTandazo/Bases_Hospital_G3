@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="InformacionDepartamentoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="543.0" style="-fx-background-color: FFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.edu.ec.hospital.TablasPacientesController">
+<VBox fx:id="InformacionDepartamentoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="574.0" style="-fx-background-color: FFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.edu.ec.hospital.TablasPacientesController">
    <children>
       <HBox prefHeight="547.0" prefWidth="543.0">
          <children>

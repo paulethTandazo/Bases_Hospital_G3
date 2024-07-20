@@ -34,6 +34,9 @@ Comenzando Insercciones de datos en la tabla doctores
 */
 INSERT INTO Doctor VALUES
 ('D00000001',0702964545,'admin','Melanie','Briones');
+INSERT INTO Doctor VALUES
+('D00000002',0923651020,'123','Ian','Cedeño','Doctor');
+
 
 CREATE TABLE Especializacion
 (Especializacion_id	 CHAR(9) NOT NULL,
@@ -64,6 +67,9 @@ Departamento_id CHAR(9) NOT NULL
 
 select * from DoctorxDepartamento;
 INSERT INTO DoctorxDepartamento VALUES ('D00000001','DP0000001');
+INSERT INTO DoctorxDepartamento VALUES ('D00000002','DP0000002');
+INSERT INTO DoctorxDepartamento VALUES ('D00000001','DP0000003');
+
 select*from Departamento;
 select*from Doctor;
 
@@ -73,6 +79,9 @@ Nombre_Departamento	VARCHAR(30) NOT NULL,
 Localizacion VARCHAR(30) NOT NULL
 );
 INSERT INTO Departamento VALUES ('DP0000001','Departamento Cardiología','Planta A');
+INSERT INTO Departamento Values ('DP0000002', 'Departamento Medicina General','Planta B');
+INSERT INTO Departamento Values ('DP0000003', 'Departamento de Cirujía','Planta C');
+
 ALTER TABLE Departamento ADD PRIMARY KEY (Departamento_id);
  CREATE TABLE PacientexDepartamento
 (Paciente_id CHAR(9) NOT NULL,
@@ -96,13 +105,17 @@ drop table Medicamento;
 Comenzando Insercciones de datos en la tabla Especializacion
 */ 
 INSERT INTO Especializacion VALUES ('SP0000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos');
-
+INSERT INTO Especializacion VALUES('SP0000002','Medicina General','Trabaja en cualquier rama médica');
+INSERT INTO Especializacion VALUES('SP0000003','Medico Cirujano','Procedimientos de cirugía');
 
 /*
 Comenzando Insercciones de datos en la tabla Experiencia, tener en cuanto que la tabla
 "Especialidades" ahora se llama "Experiencia"
 */
 INSERT INTO Especialidades VALUES ('D00000001', 'SP0000001', 2);
+INSERT INTO Especialidades VALUES ('D00000001', 'SP0000002', 4);
+
+INSERT INTO Experiencia VALUES('D00000002','SP0000002',10);
 
   
 /*

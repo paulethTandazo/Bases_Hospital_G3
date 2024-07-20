@@ -27,8 +27,8 @@ public class TablasPacientesController {
 
     @FXML
     private VBox TablaDepartamento;
-    private TableView<Departamento> TablaxDepartamentos=new TableView<>();
-    
+    private TableView<Departamento> TablaxDepartamentos = new TableView<>();
+
     @FXML
     private void initialize() {
         // Creando las columnas para llenar luego los datos
@@ -41,13 +41,11 @@ public class TablasPacientesController {
         TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
         colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
 
-        TablaxDepartamentos.getColumns().add(colDepartamentoId);
-        TablaxDepartamentos.getColumns().add(colNombre);
-        TablaxDepartamentos.getColumns().add(colLocalizacion);
-        TablaxDepartamentos.setItems(getDepartamentoData());
+        TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
         TablaDepartamento.getChildren().add(TablaxDepartamentos);
     }
 //metodo para que no duplique info 
+
     private void cargarDatosDepartamento() {
         if (TablaxDepartamentos == null) {
             return;
@@ -57,6 +55,7 @@ public class TablasPacientesController {
         TablaxDepartamentos.getItems().clear();
         TablaxDepartamentos.setItems(getDepartamentoData());
     }
+
     private ObservableList<Departamento> getDepartamentoData() {
         ObservableList<Departamento> departamentoList = FXCollections.observableArrayList();
 

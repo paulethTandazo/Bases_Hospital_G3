@@ -10,10 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,7 +27,7 @@ import javafx.stage.Stage;
  *
  * @author Pauleth
  */
-public class PacienteLoginController {
+public class PacienteLoginController implements Initializable {
 
     @FXML
     private Button Ingresar;
@@ -33,6 +37,10 @@ public class PacienteLoginController {
 
     @FXML
     private PasswordField contrasenia;
+@Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(() -> Cedula.requestFocus());
+    }
 
     @FXML
     public void comprobarUsuario() {

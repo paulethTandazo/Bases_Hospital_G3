@@ -10,35 +10,44 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.io.IOException;
+import java.net.URL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 /**
  * FXML Controller class
  *
  * @author Pauleth
  */
-public class DoctorLoginController {
+public class DoctorLoginController implements Initializable{
+
 
     @FXML
-    private Button Ingresar;
-    @FXML
     private VBox PantallaDoctorBienvenida;
-    @FXML
-    private Button BotonRegresar;
+
     @FXML
     private TextField Cedula;
     @FXML
     private PasswordField contrasenia;
 
+ @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(() -> Cedula.requestFocus());
+    }
+
     @FXML
     public void comprobarUsuario() {
+
         if (Cedula.getText().isEmpty() || contrasenia.getText().isEmpty()) {
             showErrorAlert("Llenar todos los campos");
         } else {

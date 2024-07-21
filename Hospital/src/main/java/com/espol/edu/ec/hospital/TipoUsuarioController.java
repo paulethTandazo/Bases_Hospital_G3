@@ -18,6 +18,7 @@ public class TipoUsuarioController {
     public void handleDoctorLogin() {
         try {
             App.setRoot("DoctorLogin");
+            
         } catch (IOException e) {
             showErrorAlert("Error al cargar la vista de inicio de sesión de doctor: " + e.getMessage());
         }

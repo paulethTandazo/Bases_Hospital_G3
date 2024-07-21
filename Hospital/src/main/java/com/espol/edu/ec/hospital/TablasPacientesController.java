@@ -1,6 +1,7 @@
 package com.espol.edu.ec.hospital;
 
 import Departamento.Departamento;
+import Doctor.InformacionDoctor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.scene.control.Label;
 
 public class TablasPacientesController {
 
@@ -31,23 +33,24 @@ public class TablasPacientesController {
 
     @FXML
     private void initialize() {
-         // Crear el TableView solo una vez
+
+        // Crear el TableView solo una vez
         if (TablaxDepartamentos == null) {
             TablaxDepartamentos = new TableView<>();
-        // Creando las columnas para llenar luego los datos
-        TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("ID Departamento");
-        colDepartamentoId.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
-
-        TableColumn<Departamento, String> colNombre = new TableColumn<>("Nombre");
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreDepartamento"));
-
-        TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
-        colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
-
-        TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
-        TablaDepartamento.getChildren().add(TablaxDepartamentos);
+            // Creando las columnas para llenar luego los datos
+            TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("ID Departamento");
+            colDepartamentoId.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
+            colDepartamentoId.setStyle("-fx-alignment: CENTER;");
+            TableColumn<Departamento, String> colNombre = new TableColumn<>("Nombre");
+            colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreDepartamento"));
+            colNombre.setStyle("-fx-alignment: CENTER;");
+            TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
+            colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
+            colLocalizacion.setStyle("-fx-alignment: CENTER;");
+            TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
+            TablaDepartamento.getChildren().add( TablaxDepartamentos);
+        }
     }
-         }
 //metodo para que no duplique info 
 
     private void cargarDatosDepartamento() {

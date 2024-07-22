@@ -2,6 +2,7 @@ package com.espol.edu.ec.hospital;
 
 import Departamento.Departamento;
 import Doctor.InformacionDoctor;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +16,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class TablasPacientesController {
 
@@ -48,7 +54,7 @@ public class TablasPacientesController {
             colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
             colLocalizacion.setStyle("-fx-alignment: CENTER;");
             TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
-            TablaDepartamento.getChildren().add( TablaxDepartamentos);
+            TablaDepartamento.getChildren().add(TablaxDepartamentos);
         }
     }
 //metodo para que no duplique info 
@@ -96,4 +102,40 @@ public class TablasPacientesController {
         Platform.exit();
     }
 
+    @FXML
+    private void handleInformacion() {
+        try {
+            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
+            Parent root = pantallaDoctor.load();
+            EntornoDoctorController controller = pantallaDoctor.getController();
+            controller.setCedula(this.cedula);
+
+            Stage stage = (Stage) TablaDepartamento.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        }
+    }
+@FXML
+private void handlePaciente(){
+   try {
+            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
+            Parent root = pantallaDoctor.load();
+            EntornoDoctorController controller = pantallaDoctor.getController();
+            controller.setCedula(this.cedula);
+
+            Stage stage = (Stage) TablaDepartamento.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        } 
+}
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    
 }

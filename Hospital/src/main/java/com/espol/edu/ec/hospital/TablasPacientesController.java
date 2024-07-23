@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -36,6 +37,8 @@ public class TablasPacientesController {
     @FXML
     private VBox TablaDepartamento;
     private TableView<Departamento> TablaxDepartamentos;
+    private final Label label = new Label("Tus Departamentos");
+    private final VBox Espaciado= new VBox();
 
     @FXML
     private void initialize() {
@@ -44,7 +47,7 @@ public class TablasPacientesController {
         if (TablaxDepartamentos == null) {
             TablaxDepartamentos = new TableView<>();
             // Creando las columnas para llenar luego los datos
-            TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("ID Departamento");
+            TableColumn<Departamento, String> colDepartamentoId = new TableColumn<>("Código");
             colDepartamentoId.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
             colDepartamentoId.setStyle("-fx-alignment: CENTER;");
             TableColumn<Departamento, String> colNombre = new TableColumn<>("Nombre");
@@ -53,8 +56,12 @@ public class TablasPacientesController {
             TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
             colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
             colLocalizacion.setStyle("-fx-alignment: CENTER;");
+            label.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
+            Espaciado.setSpacing(50);
             TablaxDepartamentos.getColumns().addAll(colDepartamentoId, colNombre, colLocalizacion);
-            TablaDepartamento.getChildren().add(TablaxDepartamentos);
+            TablaDepartamento.getChildren().addAll(label, TablaxDepartamentos,Espaciado);
+            TablaDepartamento.setPadding(new Insets(10,20,10,20));
+            TablaDepartamento.setSpacing(50);
         }
     }
 //metodo para que no duplique info 
@@ -117,12 +124,13 @@ public class TablasPacientesController {
             showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
         }
     }
-@FXML
-private void handlePaciente(){
-   try {
-            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
+
+    @FXML
+    private void handlePaciente() {
+        try {
+            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("TratamientoPacientes.fxml"));
             Parent root = pantallaDoctor.load();
-            EntornoDoctorController controller = pantallaDoctor.getController();
+            TratamientoPacientesController controller = pantallaDoctor.getController();
             controller.setCedula(this.cedula);
 
             Stage stage = (Stage) TablaDepartamento.getScene().getWindow();
@@ -130,12 +138,13 @@ private void handlePaciente(){
             stage.show();
         } catch (IOException e) {
             showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
-        } 
-}
+        }
+    }
+
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+
 }

@@ -39,7 +39,7 @@
                   </VBox>
                   <VBox prefHeight="27.0" prefWidth="188.0" style="-fx-background-color: #4DB7E8;">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="    Pacientes" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#handlePaciente" style="-fx-background-color: #4DB7E8;" text="    Pacientes" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="44.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

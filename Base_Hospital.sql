@@ -56,40 +56,19 @@ Creando la tabla Especializacion
 */
 CREATE TABLE Especializacion (
     Especializacion_id CHAR(9) NOT NULL,
-    nombre VARCHAR(30) NOT NULL,
-    Descripcion VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Especializacion_id)
+    Doctor_id CHAR(9) NOT NULL,
+    nombre_de_especializacion VARCHAR(30) NOT NULL,
+    Descripcion_Especializacion VARCHAR(50) NOT NULL,
+    anios_experiencia INT NOT NULL,
+    PRIMARY KEY (Especializacion_id),
+    FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE
 );
-
 /*
 Comenzando inserciones de datos en la tabla Especializacion
 */
-INSERT INTO Especializacion VALUES ('SP0000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos');
-INSERT INTO Especializacion VALUES ('SP0000002', 'Medicina General', 'Trabaja en cualquier rama médica');
-INSERT INTO Especializacion VALUES ('SP0000003', 'Medico Cirujano', 'Procedimientos de cirugía');
-
-/*
-Creando la tabla Titulacion
-*/
-CREATE TABLE Titulacion (
-    Doctor_ID CHAR(10) NOT NULL,
-    Especializacion_id CHAR(9) NOT NULL,
-    Years_exp INT NOT NULL,
-    PRIMARY KEY (Doctor_ID, Especializacion_id),
-    FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE,
-    FOREIGN KEY (Especializacion_id) REFERENCES Especializacion(Especializacion_id) ON DELETE CASCADE
-);
-
-ALTER TABLE Titulacion CHANGE Years_exp Anio_Experiencia int not null;
-
-
-/*
-Comenzando inserciones de datos en la tabla Titulacion
-*/
-INSERT INTO Titulacion VALUES ('D00000001', 'SP0000001', 2);
-INSERT INTO Titulacion VALUES ('D00000001', 'SP0000002', 4);
-INSERT INTO Titulacion VALUES ('D00000002', 'SP0000002', 10);
-SELECT * FROM Titulacion;
+INSERT INTO Especializacion VALUES ('SP0000001','D00000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos','4');
+INSERT INTO Especializacion VALUES ('SP0000002', 'D00000002','Medicina General', 'Trabaja en cualquier rama médica','3');
+INSERT INTO Especializacion VALUES ('SP0000003','D00000001', 'Medico Cirujano', 'Procedimientos de cirugía','4');
 
 /*
 Creando la tabla Departamento

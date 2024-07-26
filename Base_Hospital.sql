@@ -159,8 +159,8 @@ CREATE TABLE IF NOT EXISTS Factura (
 );
 /*
 La estructura proporcionada asegura una relación 1:1 entre Factura y Tratamiento.Ahora 
-nuestro modelo de negocio trabajará bajo la idea de que  unicamente el paciente solo podra realizar una sola consulta 
-durante el día, por ello tratamiento debe estar asociado con una única factura y viceversa.
+nuestro modelo de negocio trabajará bajo la idea de que  unicamente el paciente solo podra realizar un solo tratamiento  
+es decir no podrá realizar varios en un mismo día, por ello tratamiento debe estar asociado con una única factura y viceversa.
 */
 ALTER TABLE Factura ADD CONSTRAINT Pk_Factura PRIMARY KEY (Factura_id);
 ALTER TABLE Factura ADD CONSTRAINT U_Tratamiento_Factura UNIQUE (Tratamiento_id); 

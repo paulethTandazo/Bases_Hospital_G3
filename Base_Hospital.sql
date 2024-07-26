@@ -6,12 +6,12 @@ Creando la tabla Paciente
 CREATE TABLE IF NOT EXISTS Paciente (
     Paciente_id CHAR(9) NOT NULL,
     Cedula INT NOT NULL UNIQUE,
-    Contrasenia VARCHAR(50) NOT NULL,
-    Nombre VARCHAR(50) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
+    Contrasenia VARCHAR(45) NOT NULL,
+    Nombre VARCHAR(45) NOT NULL,
+    Apellido VARCHAR(45) NOT NULL,
     Edad INT NOT NULL,
     Fcumpleanos DATE NOT NULL,
-    Direccion VARCHAR(50) NOT NULL
+    Direccion VARCHAR(45) NOT NULL
 );
 ALTER TABLE Paciente ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
 
@@ -25,11 +25,11 @@ INSERT INTO Paciente VALUES
 Creando la tabla Doctor
 */
 CREATE TABLE IF NOT EXISTS Doctor (
-    Doctor_id CHAR(10) NOT NULL,
+    Doctor_id CHAR(9) NOT NULL,
     Cedula INT NOT NULL UNIQUE,
-    Contrasenia VARCHAR(50) NOT NULL,
-    Nombre VARCHAR(40) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL
+    Contrasenia VARCHAR(45) NOT NULL,
+    Nombre VARCHAR(45) NOT NULL,
+    Apellido VARCHAR(45) NOT NULL
 );
 ALTER TABLE Doctor ADD CONSTRAINT Pk_Doctor PRIMARY KEY (Doctor_id);
 
@@ -56,8 +56,8 @@ Creando la tabla Especializacion
 CREATE TABLE IF NOT EXISTS Especializacion (
     Especializacion_id CHAR(9) NOT NULL,
     Doctor_id CHAR(9) NOT NULL,
-    nombre_de_especializacion VARCHAR(30) NOT NULL,
-    Descripcion_Especializacion VARCHAR(50) NOT NULL,
+    nombre_de_especializacion VARCHAR(45) NOT NULL,
+    Descripcion_Especializacion VARCHAR(255) NOT NULL,
     anios_experiencia INT NOT NULL
    
 );
@@ -80,8 +80,8 @@ Creando la tabla Departamento
 */
 CREATE TABLE IF NOT EXISTS Departamento (
     Departamento_id CHAR(9) NOT NULL,
-    Nombre_Departamento VARCHAR(30) NOT NULL,
-    Localizacion VARCHAR(30) NOT NULL
+    Nombre_Departamento VARCHAR(45) NOT NULL,
+    Localizacion VARCHAR(45) NOT NULL
 
 );
 ALTER TABLE Departamento ADD CONSTRAINT Pk_Departamento PRIMARY KEY(Departamento_id);
@@ -97,7 +97,7 @@ SELECT * FROM Departamento;
 Creando la tabla DoctorxDepartamento
 */
 CREATE TABLE IF NOT EXISTS DoctorxDepartamento (
-    Doctor_id CHAR(10) NOT NULL,
+    Doctor_id CHAR(9) NOT NULL,
     Departamento_id CHAR(9) NOT NULL
     );
 ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Pk_DoctorxDepartamento PRIMARY KEY (Doctor_id,Departamento_id);
@@ -129,11 +129,11 @@ Creando la tabla Tratamiento
 */
 CREATE TABLE IF NOT EXISTS Tratamiento (
     Tratamiento_id CHAR(9) NOT NULL,
-    precio_Tratamiento INT NOT NULL,
+    precio_Tratamiento DECIMAL(10,2) NOT NULL,
     Fecha_Inicio_Tratamiento DATE NOT NULL,
     Enfermedad_a_tratar VARCHAR(45) NOT NULL,
     Paciente_id CHAR(9) NOT NULL,
-    Doctor_id CHAR(10) NOT NULL,
+    Doctor_id CHAR(9) NOT NULL,
     Fecha_Fin_Tratamiento DATE NULL
    
 );
@@ -153,9 +153,9 @@ Creando la tabla Factura
 CREATE TABLE IF NOT EXISTS Factura (
     Factura_id CHAR(9) NOT NULL UNIQUE,
     Tratamiento_id CHAR(9) NOT NULL,
-    Descripcion VARCHAR(45) NOT NULL,
+    Descripcion VARCHAR(255) NOT NULL,
 	Fecha_emision DATE NOT NULL,
-    Monto_Total DOUBLE NOT NULL -- Este valor se calculara en base a la suma del tratamiento + medicamento
+    Monto_Total DECIMAL (10,2) NOT NULL -- Este valor se calculara en base a la suma del tratamiento + medicamento
 );
 /*
 La estructura proporcionada asegura una relación 1:1 entre Factura y Tratamiento.Ahora 
@@ -172,8 +172,9 @@ Creando la tabla Medicamento
 CREATE TABLE IF NOT EXISTS Medicamento (
     Medicamento_id CHAR(9) NOT NULL,
     Valor_Medicamento DECIMAL(10, 2) NOT NULL,
-    Nombre VARCHAR(45) NOT NULL,
-    Unidad VARCHAR(45) NOT NULL 
+    Nombre VARCHAR(255) NOT NULL,
+    Unidad INT NOT NULL,
+    Total DECIMAL(10,2) NOT NULL
   
 );
 ALTER TABLE Medicamento ADD CONSTRAINT Pk_Medicamento PRIMARY KEY (Medicamento_id);

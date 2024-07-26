@@ -1,20 +1,19 @@
-CREATE DATABASE Base_Hospital;
-USE Base_Hospital;
-
+CREATE DATABASE IF NOT EXISTS Grupo3_Hospital;
+USE Grupo3_Hospital;
 /*
 Creando la tabla Paciente
 */
-CREATE TABLE Paciente (
+CREATE TABLE IF NOT EXISTS Paciente (
     Paciente_id CHAR(9) NOT NULL,
-    Cedula INT NOT NULL,
+    Cedula INT NOT NULL UNIQUE,
     Contrasenia VARCHAR(50) NOT NULL,
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
     Edad INT NOT NULL,
     Fcumpleanos DATE NOT NULL,
-    Direccion VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Paciente_id)
+    Direccion VARCHAR(50) NOT NULL
 );
+ALTER TABLE Paciente ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
 
 /*
 Comenzando inserciones de datos en la tabla Paciente
@@ -25,14 +24,14 @@ INSERT INTO Paciente VALUES
 /*
 Creando la tabla Doctor
 */
-CREATE TABLE Doctor (
+CREATE TABLE IF NOT EXISTS Doctor (
     Doctor_id CHAR(10) NOT NULL,
-    Cedula INT NOT NULL,
+    Cedula INT NOT NULL UNIQUE,
     Contrasenia VARCHAR(50) NOT NULL,
     Nombre VARCHAR(40) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Doctor_id)
+    Apellido VARCHAR(50) NOT NULL
 );
+ALTER TABLE Doctor ADD CONSTRAINT Pk_Doctor PRIMARY KEY (Doctor_id);
 
 /*
 Comenzando inserciones de datos en la tabla Doctor
@@ -54,32 +53,38 @@ INSERT INTO Doctor VALUES
 /*
 Creando la tabla Especializacion
 */
-CREATE TABLE Especializacion (
+CREATE TABLE IF NOT EXISTS Especializacion (
     Especializacion_id CHAR(9) NOT NULL,
     Doctor_id CHAR(9) NOT NULL,
     nombre_de_especializacion VARCHAR(30) NOT NULL,
     Descripcion_Especializacion VARCHAR(50) NOT NULL,
-    anios_experiencia INT NOT NULL,
-    PRIMARY KEY (Especializacion_id),
-    FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE
+    anios_experiencia INT NOT NULL
+   
 );
+/*
+Consideramos pertienente trabajar con una sola tabla llamada Especialización observamos que se podía unir todo en una sola
+tabla, realmente no era necesario construir 3 tablas como en el modelo original y sobre todo simplifica las consultas 
+a la hora de querer consultar información sobre el doctor
+*/
+ALTER TABLE Especializacion ADD CONSTRAINT Pk_Especializacion PRIMARY KEY (Especializacion_id);
+ALTER TABLE Especializacion ADD CONSTRAINT Fk_Doctor FOREIGN KEY(Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
 /*
 Comenzando inserciones de datos en la tabla Especializacion
 */
 INSERT INTO Especializacion VALUES ('SP0000001','D00000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos','4');
 INSERT INTO Especializacion VALUES ('SP0000002', 'D00000002','Medicina General', 'Trabaja en cualquier rama médica','3');
 INSERT INTO Especializacion VALUES ('SP0000003','D00000001', 'Medico Cirujano', 'Procedimientos de cirugía','4');
-
+select*from Especializacion;
 /*
 Creando la tabla Departamento
 */
-CREATE TABLE Departamento (
+CREATE TABLE IF NOT EXISTS Departamento (
     Departamento_id CHAR(9) NOT NULL,
     Nombre_Departamento VARCHAR(30) NOT NULL,
-    Localizacion VARCHAR(30) NOT NULL,
-    PRIMARY KEY (Departamento_id)
-);
+    Localizacion VARCHAR(30) NOT NULL
 
+);
+ALTER TABLE Departamento ADD CONSTRAINT Pk_Departamento PRIMARY KEY(Departamento_id);
 /*
 Comenzando inserciones de datos en la tabla Departamento
 */
@@ -91,14 +96,13 @@ SELECT * FROM Departamento;
 /*
 Creando la tabla DoctorxDepartamento
 */
-CREATE TABLE DoctorxDepartamento (
+CREATE TABLE IF NOT EXISTS DoctorxDepartamento (
     Doctor_id CHAR(10) NOT NULL,
-    Departamento_id CHAR(9) NOT NULL,
-    PRIMARY KEY (Doctor_id, Departamento_id),
-    FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE,
-    FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE
-);
-
+    Departamento_id CHAR(9) NOT NULL
+    );
+ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Pk_DoctorxDepartamento PRIMARY KEY (Doctor_id,Departamento_id);
+ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Fk_Doctor_Departamento FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
+ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Fk_Departamento FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
 /*
 Comenzando inserciones en la tabla DoctorxDepartamento
 */
@@ -110,66 +114,91 @@ SELECT * FROM DoctorxDepartamento;
 /*
 Creando la tabla PacientexDepartamento
 */
-CREATE TABLE PacientexDepartamento (
+CREATE TABLE IF NOT EXISTS PacientexDepartamento (
     Paciente_id CHAR(9) NOT NULL,
     Departamento_id CHAR(9) NOT NULL,
     Fecha_Asignacion DATE NOT NULL,
     Numero_Habitacion INT NOT NULL,
-    Fecha_Alta DATE NOT NULL,
-    PRIMARY KEY (Paciente_id, Departamento_id),
-    FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE,
-    FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE
+    Fecha_Alta DATE NULL
 );
-
+ALTER TABLE PacientexDepartamento ADD CONSTRAINT Pk_Paciente_Departamento PRIMARY KEY (Paciente_id,Departamento_id);
+ALTER TABLE PacientexDepartamento ADD CONSTRAINT Fk_Paciente_Departamento FOREIGN KEY(Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
+ALTER TABLE PacientexDepartamento ADD CONSTRAINT Fk_Departamento_Paciente FOREIGN KEY(Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
 /*
 Creando la tabla Tratamiento
 */
-CREATE TABLE Tratamiento (
+CREATE TABLE IF NOT EXISTS Tratamiento (
     Tratamiento_id CHAR(9) NOT NULL,
+    precio_Tratamiento INT NOT NULL,
     Fecha_Inicio_Tratamiento DATE NOT NULL,
     Enfermedad_a_tratar VARCHAR(45) NOT NULL,
     Paciente_id CHAR(9) NOT NULL,
     Doctor_id CHAR(10) NOT NULL,
-    Fecha_Fin_Tratamiento DATE NULL,
-    PRIMARY KEY (Tratamiento_id),
-    FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE,
-    FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE
+    Fecha_Fin_Tratamiento DATE NULL
+   
 );
+/*
+Primera observación: Un paciente podrá realizarse varios tratamientos pero estos tratamientos no podrá relalizarlos
+en un mismo día sino que tendrán que ser en diferentes días, para que tenga relevancia mi relación definida en la 
+tabla Tratamiento y Factura.
+*/
+ALTER TABLE Tratamiento ADD CONSTRAINT Pk_Tratamiento PRIMARY KEY (Tratamiento_id);
+ALTER TABLE Tratamiento ADD CONSTRAINT FK_TTratamiento_Paciente FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
+ALTER TABLE Tratamiento ADD CONSTRAINT Fk_TTratamiento_Doctor FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
+
 
 /*
 Creando la tabla Factura
 */
-CREATE TABLE Factura (
-    Factura_id CHAR(9) NOT NULL,
+CREATE TABLE IF NOT EXISTS Factura (
+    Factura_id CHAR(9) NOT NULL UNIQUE,
     Tratamiento_id CHAR(9) NOT NULL,
-    Descripcion_Servicio VARCHAR(45) NOT NULL,
-    Valor_a_pagar DOUBLE NOT NULL,
-    PRIMARY KEY (Factura_id),
-    UNIQUE (Tratamiento_id),
-    FOREIGN KEY (Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id) ON DELETE CASCADE
+    Descripcion VARCHAR(45) NOT NULL,
+	Fecha_emision DATE NOT NULL,
+    Monto_Total DOUBLE NOT NULL -- Este valor se calculara en base a la suma del tratamiento + medicamento
 );
+/*
+La estructura proporcionada asegura una relación 1:1 entre Factura y Tratamiento.Ahora 
+nuestro modelo de negocio trabajará bajo la idea de que  unicamente el paciente solo podra realizar una sola consulta 
+durante el día, por ello tratamiento debe estar asociado con una única factura y viceversa.
+*/
+ALTER TABLE Factura ADD CONSTRAINT Pk_Factura PRIMARY KEY (Factura_id);
+ALTER TABLE Factura ADD CONSTRAINT U_Tratamiento_Factura UNIQUE (Tratamiento_id); 
+ALTER TABLE Factura ADD CONSTRAINT Fk_Tratamiento_Factura FOREIGN KEY ( Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id) ON DELETE CASCADE;
 
 /*
 Creando la tabla Medicamento
 */
-CREATE TABLE Medicamento (
+CREATE TABLE IF NOT EXISTS Medicamento (
     Medicamento_id CHAR(9) NOT NULL,
+    Valor_Medicamento DECIMAL(10, 2) NOT NULL,
     Nombre VARCHAR(45) NOT NULL,
-    Unidad VARCHAR(45) NOT NULL,
-    PRIMARY KEY (Medicamento_id)
+    Unidad VARCHAR(45) NOT NULL 
+  
 );
-
+ALTER TABLE Medicamento ADD CONSTRAINT Pk_Medicamento PRIMARY KEY (Medicamento_id);
 /*
-Creando la tabla TratamientoXMedicamento
+Creando la tabla TratamientoXMedicamento recordar que
 */
-CREATE TABLE TratamientoXMedicamento (
+CREATE TABLE IF NOT EXISTS TratamientoXMedicamento (
     Tratamiento_id CHAR(9) NOT NULL,
-    Medicamento_id CHAR(9) NOT NULL,
-    PRIMARY KEY (Tratamiento_id, Medicamento_id),
-    FOREIGN KEY (Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id) ON DELETE CASCADE,
-    FOREIGN KEY (Medicamento_id) REFERENCES Medicamento(Medicamento_id) ON DELETE CASCADE
+    Medicamento_id CHAR(9) NOT NULL
 );
+ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Pk_Tratamiento_Medicamento PRIMARY KEY (Tratamiento_id,Medicamento_id);
+ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Tratamiento_Medicamento FOREIGN KEY (Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id);
+ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Medicamento_Tratamiento FOREIGN KEY (Medicamento_id) REFERENCES Medicamento(Medicamento_id);
 
+
+
+
+
+
+
+
+
+
+
+-- Esto es para el código en java
 /*
 Procedimiento almacenado Paciente
 */

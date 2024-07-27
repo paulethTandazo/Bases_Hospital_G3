@@ -1,19 +1,31 @@
 CREATE DATABASE IF NOT EXISTS Grupo3_Hospital;
 USE Grupo3_Hospital;
+
 /*
 Creando la tabla Paciente
 */
 CREATE TABLE IF NOT EXISTS Paciente (
-    Paciente_id CHAR(9) NOT NULL,
-    Cedula INT NOT NULL UNIQUE,
-    Contrasenia VARCHAR(45) NOT NULL,
-    Nombre VARCHAR(45) NOT NULL,
-    Apellido VARCHAR(45) NOT NULL,
-    Edad INT NOT NULL,
-    Fcumpleanos DATE NOT NULL,
-    Direccion VARCHAR(45) NOT NULL
+    Paciente_id CHAR(9) ,
+    Cedula INT ,
+    Contrasenia VARCHAR(45) ,
+    Nombre VARCHAR(45) ,
+    Apellido VARCHAR(45) ,
+    Edad INT ,
+    Fcumpleanos DATE ,
+    Direccion VARCHAR(45) 
 );
-ALTER TABLE Paciente ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
+ALTER TABLE Paciente     
+	MODIFY Paciente_id CHAR(9) NOT NULL,
+    MODIFY Cedula INT NOT NULL,
+    MODIFY Contrasenia VARCHAR(50) NOT NULL,
+    MODIFY Nombre VARCHAR(50) NOT NULL,
+    MODIFY Apellido VARCHAR(50) NOT NULL,
+    MODIFY Edad INT NOT NULL,
+    MODIFY Fcumpleanos DATE NOT NULL,
+    MODIFY Direccion VARCHAR(50) NOT NULL,
+    ADD CONSTRAINT paciente_cedula UNIQUE (Cedula),
+	ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
+
 
 /*
 Comenzando inserciones de datos en la tabla Paciente
@@ -25,13 +37,21 @@ INSERT INTO Paciente VALUES
 Creando la tabla Doctor
 */
 CREATE TABLE IF NOT EXISTS Doctor (
-    Doctor_id CHAR(9) NOT NULL,
-    Cedula INT NOT NULL UNIQUE,
-    Contrasenia VARCHAR(45) NOT NULL,
-    Nombre VARCHAR(45) NOT NULL,
-    Apellido VARCHAR(45) NOT NULL
+    Doctor_id CHAR(9) ,
+    Cedula INT ,
+    Contrasenia VARCHAR(45) ,
+    Nombre VARCHAR(45),
+    Apellido VARCHAR(45)
 );
-ALTER TABLE Doctor ADD CONSTRAINT Pk_Doctor PRIMARY KEY (Doctor_id);
+ALTER TABLE Doctor
+MODIFY Cedula INT NOT NULL,
+ADD CONSTRAINT uc_doctor_cedula UNIQUE (Cedula),
+MODIFY Contrasenia VARCHAR(50) NOT NULL,
+MODIFY Nombre VARCHAR(40) NOT NULL,
+MODIFY Apellido VARCHAR(50) NOT NULL,
+ADD CONSTRAINT pk_doctor PRIMARY KEY (Doctor_id);
+
+
 
 /*
 Comenzando inserciones de datos en la tabla Doctor
@@ -54,12 +74,11 @@ INSERT INTO Doctor VALUES
 Creando la tabla Especializacion
 */
 CREATE TABLE IF NOT EXISTS Especializacion (
-    Especializacion_id CHAR(9) NOT NULL,
-    Doctor_id CHAR(9) NOT NULL,
-    nombre_de_especializacion VARCHAR(45) NOT NULL,
-    Descripcion_Especializacion VARCHAR(255) NOT NULL,
-    anios_experiencia INT NOT NULL
-   
+    Especializacion_id CHAR(9) ,
+    Doctor_id CHAR(9) ,
+    nombre_de_especializacion VARCHAR(45) ,
+    Descripcion_Especializacion VARCHAR(255),
+    anios_experiencia INT 
 );
 /*
 Consideramos pertienente trabajar con una sola tabla llamada Especialización observamos que se podía unir todo en una sola
@@ -67,7 +86,17 @@ tabla, realmente no era necesario construir 3 tablas como en el modelo original 
 a la hora de querer consultar información sobre el doctor
 */
 ALTER TABLE Especializacion ADD CONSTRAINT Pk_Especializacion PRIMARY KEY (Especializacion_id);
+ALTER TABLE Especializacion
+    MODIFY Especializacion_id CHAR(9) NOT NULL,
+    MODIFY Doctor_id CHAR(9) NOT NULL,
+    MODIFY nombre_de_especializacion VARCHAR(30) NOT NULL,
+    MODIFY Descripcion_Especializacion VARCHAR(50) NOT NULL,
+    MODIFY anios_experiencia INT NOT NULL;
+
 ALTER TABLE Especializacion ADD CONSTRAINT Fk_Doctor FOREIGN KEY(Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
+
+
+
 /*
 Comenzando inserciones de datos en la tabla Especializacion
 */
@@ -79,12 +108,19 @@ select*from Especializacion;
 Creando la tabla Departamento
 */
 CREATE TABLE IF NOT EXISTS Departamento (
-    Departamento_id CHAR(9) NOT NULL,
-    Nombre_Departamento VARCHAR(45) NOT NULL,
-    Localizacion VARCHAR(45) NOT NULL
+    Departamento_id CHAR(9) ,
+    Nombre_Departamento VARCHAR(45),
+    Localizacion VARCHAR(45) 
 
 );
 ALTER TABLE Departamento ADD CONSTRAINT Pk_Departamento PRIMARY KEY(Departamento_id);
+
+ALTER TABLE Departamento
+    MODIFY Departamento_id CHAR(9) NOT NULL,
+    MODIFY Nombre_Departamento VARCHAR(30) NOT NULL,
+    MODIFY Localizacion VARCHAR(30) NOT NULL;
+
+
 /*
 Comenzando inserciones de datos en la tabla Departamento
 */
@@ -97,12 +133,16 @@ SELECT * FROM Departamento;
 Creando la tabla DoctorxDepartamento
 */
 CREATE TABLE IF NOT EXISTS DoctorxDepartamento (
-    Doctor_id CHAR(9) NOT NULL,
-    Departamento_id CHAR(9) NOT NULL
+    Doctor_id CHAR(9) ,
+    Departamento_id CHAR(9) 
     );
 ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Pk_DoctorxDepartamento PRIMARY KEY (Doctor_id,Departamento_id);
 ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Fk_Doctor_Departamento FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
 ALTER TABLE DoctorxDepartamento ADD CONSTRAINT Fk_Departamento FOREIGN KEY (Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
+ALTER TABLE DoctorxDepartamento
+    MODIFY Doctor_id CHAR(9) NOT NULL,
+    MODIFY Departamento_id CHAR(9) NOT NULL;
+
 /*
 Comenzando inserciones en la tabla DoctorxDepartamento
 */
@@ -115,25 +155,32 @@ SELECT * FROM DoctorxDepartamento;
 Creando la tabla PacientexDepartamento
 */
 CREATE TABLE IF NOT EXISTS PacientexDepartamento (
-    Paciente_id CHAR(9) NOT NULL,
-    Departamento_id CHAR(9) NOT NULL,
-    Fecha_Asignacion DATE NOT NULL,
-    Numero_Habitacion INT NOT NULL,
-    Fecha_Alta DATE NULL
+    Paciente_id CHAR(9) ,
+    Departamento_id CHAR(9) ,
+    Fecha_Asignacion DATE ,
+    Numero_Habitacion INT ,
+    Fecha_Alta DATE
 );
 ALTER TABLE PacientexDepartamento ADD CONSTRAINT Pk_Paciente_Departamento PRIMARY KEY (Paciente_id,Departamento_id);
 ALTER TABLE PacientexDepartamento ADD CONSTRAINT Fk_Paciente_Departamento FOREIGN KEY(Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
 ALTER TABLE PacientexDepartamento ADD CONSTRAINT Fk_Departamento_Paciente FOREIGN KEY(Departamento_id) REFERENCES Departamento(Departamento_id) ON DELETE CASCADE;
+ALTER TABLE PacientexDepartamento
+    MODIFY Paciente_id CHAR(9) NOT NULL,
+    MODIFY Departamento_id CHAR(9) NOT NULL,
+    MODIFY Fecha_Asignacion DATE NOT NULL,
+    MODIFY Numero_Habitacion INT NOT NULL,
+    MODIFY Fecha_Alta DATE NULL;
+
 /*
 Creando la tabla Tratamiento
 */
 CREATE TABLE IF NOT EXISTS Tratamiento (
-    Tratamiento_id CHAR(9) NOT NULL,
-    precio_Tratamiento DECIMAL(10,2) NOT NULL,
-    Fecha_Inicio_Tratamiento DATE NOT NULL,
-    Enfermedad_a_tratar VARCHAR(45) NOT NULL,
-    Paciente_id CHAR(9) NOT NULL,
-    Doctor_id CHAR(9) NOT NULL,
+    Tratamiento_id CHAR(9) ,
+    precio_Tratamiento DECIMAL(10,2) ,
+    Fecha_Inicio_Tratamiento DATE ,
+    Enfermedad_a_tratar VARCHAR(45) ,
+    Paciente_id CHAR(9) ,
+    Doctor_id CHAR(9),
     Fecha_Fin_Tratamiento DATE NULL
    
 );
@@ -142,20 +189,27 @@ Primera observación: Un paciente podrá realizarse varios tratamientos pero est
 en un mismo día sino que tendrán que ser en diferentes días, para que tenga relevancia mi relación definida en la 
 tabla Tratamiento y Factura.
 */
-ALTER TABLE Tratamiento ADD CONSTRAINT Pk_Tratamiento PRIMARY KEY (Tratamiento_id);
+
+ALTER TABLE Tratamiento
+    MODIFY Tratamiento_id CHAR(9) NOT NULL,
+    MODIFY  precio_Tratamiento INT NOT NULL,
+    MODIFY Fecha_Inicio_Tratamiento DATE NOT NULL,
+    MODIFY Enfermedad_a_tratar VARCHAR(45) NOT NULL,
+    MODIFY Paciente_id CHAR(9) NOT NULL,
+    MODIFY Doctor_id CHAR(10) NOT NULL,
+    MODIFY Fecha_Fin_Tratamiento DATE NULL;
 ALTER TABLE Tratamiento ADD CONSTRAINT FK_TTratamiento_Paciente FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
 ALTER TABLE Tratamiento ADD CONSTRAINT Fk_TTratamiento_Doctor FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
-
-
+ALTER TABLE Tratamiento ADD CONSTRAINT Pk_Tratamiento PRIMARY KEY (Tratamiento_id);
 /*
 Creando la tabla Factura
 */
 CREATE TABLE IF NOT EXISTS Factura (
-    Factura_id CHAR(9) NOT NULL UNIQUE,
-    Tratamiento_id CHAR(9) NOT NULL,
-    Descripcion VARCHAR(255) NOT NULL,
-	Fecha_emision DATE NOT NULL,
-    Monto_Total DECIMAL (10,2) NOT NULL -- Este valor se calculara en base a la suma del tratamiento + medicamento
+    Factura_id CHAR(9) ,
+    Tratamiento_id CHAR(9) ,
+    Descripcion VARCHAR(255) ,
+	Fecha_emision DATE,
+    Monto_Total DECIMAL (10,2)  -- Este valor se calculara en base a la suma del tratamiento + medicamento
 );
 /*
 La estructura proporcionada asegura una relación 1:1 entre Factura y Tratamiento.Ahora 
@@ -163,6 +217,13 @@ nuestro modelo de negocio trabajará bajo la idea de que  unicamente el paciente
 es decir no podrá realizar varios en un mismo día, por ello tratamiento debe estar asociado con una única factura y viceversa.
 */
 ALTER TABLE Factura ADD CONSTRAINT Pk_Factura PRIMARY KEY (Factura_id);
+ALTER TABLE Factura
+    MODIFY Factura_id CHAR(9) NOT NULL,
+    MODIFY Tratamiento_id CHAR(9) NOT NULL,
+    MODIFY Descripcion VARCHAR(45) NOT NULL,
+    MODIFY Fecha_emision DATE NOT NULL,
+    MODIFY Monto_Total DOUBLE NOT NULL;
+
 ALTER TABLE Factura ADD CONSTRAINT U_Tratamiento_Factura UNIQUE (Tratamiento_id); 
 ALTER TABLE Factura ADD CONSTRAINT Fk_Tratamiento_Factura FOREIGN KEY ( Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id) ON DELETE CASCADE;
 
@@ -170,25 +231,33 @@ ALTER TABLE Factura ADD CONSTRAINT Fk_Tratamiento_Factura FOREIGN KEY ( Tratamie
 Creando la tabla Medicamento
 */
 CREATE TABLE IF NOT EXISTS Medicamento (
-    Medicamento_id CHAR(9) NOT NULL,
-    Valor_Medicamento DECIMAL(10, 2) NOT NULL,
-    Nombre VARCHAR(255) NOT NULL,
-    Unidad INT NOT NULL,
-    Total DECIMAL(10,2) NOT NULL
+    Medicamento_id CHAR(9),
+    Valor_Medicamento DECIMAL(10, 2) ,
+    Nombre VARCHAR(255) ,
+    Unidad INT,
+    Total DECIMAL(10,2) 
   
 );
 ALTER TABLE Medicamento ADD CONSTRAINT Pk_Medicamento PRIMARY KEY (Medicamento_id);
+ALTER TABLE Medicamento
+    MODIFY Medicamento_id CHAR(9) NOT NULL,
+	MODIFY Valor_Medicamento DECIMAL(10, 2) NOT NULL,
+    MODIFY Nombre VARCHAR(45) NOT NULL,
+    MODIFY Unidad VARCHAR(45) NOT NULL;
+
 /*
 Creando la tabla TratamientoXMedicamento recordar que
 */
 CREATE TABLE IF NOT EXISTS TratamientoXMedicamento (
-    Tratamiento_id CHAR(9) NOT NULL,
-    Medicamento_id CHAR(9) NOT NULL
+    Tratamiento_id CHAR(9),
+    Medicamento_id CHAR(9) 
 );
 ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Pk_Tratamiento_Medicamento PRIMARY KEY (Tratamiento_id,Medicamento_id);
+ALTER TABLE TratamientoXMedicamento
+    MODIFY Tratamiento_id CHAR(9) NOT NULL,
+    MODIFY Medicamento_id CHAR(9) NOT NULL;
 ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Tratamiento_Medicamento FOREIGN KEY (Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id);
 ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Medicamento_Tratamiento FOREIGN KEY (Medicamento_id) REFERENCES Medicamento(Medicamento_id);
-
 
 
 

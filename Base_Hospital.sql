@@ -27,11 +27,6 @@ ALTER TABLE Paciente
 	ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
 
 
-/*
-Comenzando inserciones de datos en la tabla Paciente
-*/
-INSERT INTO Paciente VALUES
-('P00000001', 950022434, 'root', 'Pauleth', 'Tandazo', 22, STR_TO_DATE('2002-07-23', '%Y-%m-%d'), 'Centro');
 
 /*
 Creando la tabla Doctor
@@ -52,13 +47,6 @@ MODIFY Apellido VARCHAR(50) NOT NULL,
 ADD CONSTRAINT pk_doctor PRIMARY KEY (Doctor_id);
 
 
-
-/*
-Comenzando inserciones de datos en la tabla Doctor
-*/
-INSERT INTO Doctor VALUES
-('D00000001', 702964545, 'admin', 'Melanie', 'Briones');
-
 /*
 Agregamos el TipoUsuario (Paciente o Doctor) para identificar por medio de un procedimiento a qué tipo pertenece cada usuario
 */
@@ -66,20 +54,22 @@ ALTER TABLE Paciente ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Pacien
 ALTER TABLE Doctor ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Doctor';
 
 INSERT INTO Paciente VALUES
-('P00000002', 950022433, 'shaggy123', 'Domenica', 'Moran', 21, STR_TO_DATE('2003-05-04', '%Y-%m-%d'), 'Mucho Lote 2', 'Paciente');
+('P00000001', 950022434, 'root', 'Pauleth', 'Tandazo', 22, STR_TO_DATE('2002-07-23', '%Y-%m-%d'), 'Centro', Paciente),
+('P00000002', 950022433, 'shaggy123', 'Domenica', 'Moran', 21, STR_TO_DATE('2003-05-04', '%Y-%m-%d'), 'Mucho Lote 2', 'Paciente'),
+('P00000003', 456789123, 'contraseña789', 'Luis', 'Fernández', 45, '1978-11-10', 'Calle 789, Centro',Paciente),
+('P00000004', 321654987, 'contraseña321', 'Ana', 'Martínez', 35, '1989-05-30', 'Avenida 321, Sur',Paciente),
+('P00000005', 654987321, 'contraseña654', 'Carlos', 'Rodríguez', 50, '1973-09-12', 'Calle 654, Norte',Paciente);
 INSERT INTO Doctor VALUES
+('D00000001', 702964545, 'admin', 'Melanie', 'Briones',Doctor);
 ('D00000002', 923651020, '123', 'Ian', 'Cedeño', 'Doctor');
+('D00000003', 334455667, 'pass9101', 'Luis', 'García',Doctor),
+('D00000004', 445566778, 'pass1122', 'Laura', 'Vázquez',Doctor),
+('D00000005', 556677889, 'pass2233', 'Fernando', 'Lopez',Doctor);
 
 /*
 Creando la tabla Especializacion
 */
-CREATE TABLE IF NOT EXISTS Especializacion (
-    Especializacion_id CHAR(9) ,
-    Doctor_id CHAR(9) ,
-    nombre_de_especializacion VARCHAR(45) ,
-    Descripcion_Especializacion VARCHAR(255),
-    anios_experiencia INT 
-);
+ 
 /*
 Consideramos pertienente trabajar con una sola tabla llamada Especialización observamos que se podía unir todo en una sola
 tabla, realmente no era necesario construir 3 tablas como en el modelo original y sobre todo simplifica las consultas 
@@ -102,7 +92,9 @@ Comenzando inserciones de datos en la tabla Especializacion
 */
 INSERT INTO Especializacion VALUES ('SP0000001','D00000001', 'Cardiologo', 'Trabaja en procedimientos cardíacos y cardíacos','4');
 INSERT INTO Especializacion VALUES ('SP0000002', 'D00000002','Medicina General', 'Trabaja en cualquier rama médica','3');
-INSERT INTO Especializacion VALUES ('SP0000003','D00000001', 'Medico Cirujano', 'Procedimientos de cirugía','4');
+INSERT INTO Especializacion VALUES ('SP0000003','D00000003', 'Medico Cirujano', 'Procedimientos de cirugía','4');
+INSERT INTO Especializacion VALUES ('SP0000004', 'D00000004', 'Dermatología', 'Diagnóstico y tratamiento de enfermedades de la piel.', 10);
+INSERT INTO Especializacion VALUES ('SP0000005', 'D00000005', 'Pediatría', 'Cuidado médico para niños, desde el nacimiento hasta la adolescencia.', 20);
 select*from Especializacion;
 /*
 Creando la tabla Departamento
@@ -127,6 +119,8 @@ Comenzando inserciones de datos en la tabla Departamento
 INSERT INTO Departamento VALUES ('DP0000001', 'Departamento Cardiología', 'Planta A');
 INSERT INTO Departamento VALUES ('DP0000002', 'Departamento Medicina General', 'Planta B');
 INSERT INTO Departamento VALUES ('DP0000003', 'Departamento de Cirugía', 'Planta C');
+INSERT INTO Departamento VALUES ('DP0000004', 'Departamento de Dermatología', 'Planta D');
+INSERT INTO Departamento VALUES ('DP0000005', 'Departamento de Pediatria', 'Planta E');
 SELECT * FROM Departamento;
 
 /*
@@ -149,6 +143,8 @@ Comenzando inserciones en la tabla DoctorxDepartamento
 INSERT INTO DoctorxDepartamento VALUES ('D00000001', 'DP0000001');
 INSERT INTO DoctorxDepartamento VALUES ('D00000002', 'DP0000002');
 INSERT INTO DoctorxDepartamento VALUES ('D00000001', 'DP0000003');
+INSERT INTO DoctorxDepartamento VALUES ('D00000003', 'DP0000003');
+INSERT INTO DoctorxDepartamento VALUES ('D00000002', 'DP0000001');
 SELECT * FROM DoctorxDepartamento;
 
 /*
@@ -170,6 +166,17 @@ ALTER TABLE PacientexDepartamento
     MODIFY Fecha_Asignacion DATE NOT NULL,
     MODIFY Numero_Habitacion INT NOT NULL,
     MODIFY Fecha_Alta DATE NULL;
+
+/*
+Insertando los datos de la tabla PAcientexDepartamento
+*/
+INSERT INTO PacientexDepartamento (Paciente_id, Departamento_id, Fecha_Asignacion, Numero_Habitacion, Fecha_Alta)
+VALUES
+('P00000001', 'DP0000001', '2024-06-01', 101, '2024-06-10'),
+('P00000002', 'DP0000002', '2024-06-05', 205, '2024-06-15'),
+('P00000003', 'DP0000001', '2024-06-08', 102, '2024-06-18'),
+('P00000004', 'DP0000003', '2024-06-10', 301, '2024-06-20'),
+('P00000005', 'DP0000002', '2024-06-12', 208, '2024-06-22');
 
 /*
 Creando la tabla Tratamiento
@@ -201,6 +208,18 @@ ALTER TABLE Tratamiento
 ALTER TABLE Tratamiento ADD CONSTRAINT FK_TTratamiento_Paciente FOREIGN KEY (Paciente_id) REFERENCES Paciente(Paciente_id) ON DELETE CASCADE;
 ALTER TABLE Tratamiento ADD CONSTRAINT Fk_TTratamiento_Doctor FOREIGN KEY (Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
 ALTER TABLE Tratamiento ADD CONSTRAINT Pk_Tratamiento PRIMARY KEY (Tratamiento_id);
+
+/*
+Insertando los datos de la tabla Tratamiento
+*/
+INSERT INTO Tratamiento (Tratamiento_id, precio_Tratamiento, Fecha_Inicio_Tratamiento, Enfermedad_a_tratar, Paciente_id, Doctor_id, Fecha_Fin_Tratamiento)
+VALUES
+('T00000001', 1500.00, '2024-05-01', 'Hipertensión', 'P000001', 'D000001', '2024-05-15'),
+('T00000002', 800.00, '2024-05-10', 'Asma', 'P000002', 'D000002', '2024-06-10'),
+('T00000003', 2000.00, '2024-05-20', 'Diabetes Tipo 2', 'P000003', 'D000003', NULL),
+('T00000004', 1200.00, '2024-06-01', 'Eczema', 'P000004', 'D000004', '2024-06-20'),
+('T00000005', 1700.00, '2024-06-15', 'Cáncer de piel', 'P000005', 'D000005', NULL);
+
 /*
 Creando la tabla Factura
 */
@@ -228,6 +247,17 @@ ALTER TABLE Factura ADD CONSTRAINT U_Tratamiento_Factura UNIQUE (Tratamiento_id)
 ALTER TABLE Factura ADD CONSTRAINT Fk_Tratamiento_Factura FOREIGN KEY ( Tratamiento_id) REFERENCES Tratamiento(Tratamiento_id) ON DELETE CASCADE;
 
 /*
+Insertando los datos de la tabla Factura
+*/
+INSERT INTO Factura (Factura_id, Tratamiento_id, Descripcion, Fecha_emision, Monto_Total)
+VALUES
+('F00000001', 'T00000001', 'Factura por tratamiento de hipertensión con seguimiento médico', '2024-05-02', 1500.00),
+('F00000002', 'T00000002', 'Factura por tratamiento de asma con medicamentos y consulta', '2024-05-11', 800.00),
+('F00000003', 'T00000003', 'Factura por tratamiento de diabetes tipo 2, incluye consultas y medicamentos', '2024-05-21', 2000.00),
+('F00000004', 'T00000004', 'Factura por tratamiento de eczema con cremas y consultas', '2024-06-02', 1200.00),
+('F00000005', 'T00000005', 'Factura por tratamiento de cáncer de piel, incluye cirugía y seguimiento', '2024-06-16', 1700.00);
+
+/*
 Creando la tabla Medicamento
 */
 CREATE TABLE IF NOT EXISTS Medicamento (
@@ -246,6 +276,17 @@ ALTER TABLE Medicamento
     MODIFY Unidad VARCHAR(45) NOT NULL;
 
 /*
+Insertando los valores de la tabla
+*/
+INSERT INTO Medicamento (Medicamento_id, Valor_Medicamento, Nombre, Unidad, Total)
+VALUES
+('M000001', 50.00, 'Atenolol', 30, 1500.00),
+('M000002', 25.00, 'Salbutamol', 20, 500.00),
+('M000003', 75.00, 'Metformina', 60, 4500.00),
+('M000004', 40.00, 'Clobetasol', 15, 600.00),
+('M000005', 90.00, 'Doxorubicina', 10, 900.00);
+
+/*
 Creando la tabla TratamientoXMedicamento recordar que
 */
 CREATE TABLE IF NOT EXISTS TratamientoXMedicamento (
@@ -260,6 +301,17 @@ ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Tratamiento_Medicamento FO
 ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Medicamento_Tratamiento FOREIGN KEY (Medicamento_id) REFERENCES Medicamento(Medicamento_id);
 
 
+/*
+Insertando los valores de la tabla
+*/
+
+INSERT INTO TratamientoXMedicamento (Tratamiento_id, Medicamento_id)
+VALUES
+('T00000001', 'M00000001'),
+('T00000001', 'M00000002'),
+('T00000002', 'M00000003'),
+('T00000003', 'M00000004'),
+('T00000004', 'M00000005');
 
 
 

@@ -25,9 +25,11 @@ ALTER TABLE Paciente
     MODIFY Direccion VARCHAR(50) NOT NULL,
     ADD CONSTRAINT paciente_cedula UNIQUE (Cedula),
 	ADD CONSTRAINT Pk_Paciente PRIMARY KEY (Paciente_id);
-
-
-
+/*
+Insertando datos en la tabla Paciente
+*/
+INSERT INTO Paciente VALUES
+('P00000001', 950022434, 'root', 'Pauleth', 'Tandazo', 22, STR_TO_DATE('2002-07-23', '%Y-%m-%d'), 'Centro');
 /*
 Creando la tabla Doctor
 */
@@ -45,31 +47,47 @@ MODIFY Contrasenia VARCHAR(50) NOT NULL,
 MODIFY Nombre VARCHAR(40) NOT NULL,
 MODIFY Apellido VARCHAR(50) NOT NULL,
 ADD CONSTRAINT pk_doctor PRIMARY KEY (Doctor_id);
-
-
+/*
+Insertando datos en la tabla Doctor
+*/
+INSERT INTO Doctor VALUES
+('D00000001', 702964545, 'admin', 'Melanie', 'Briones');
 /*
 Agregamos el TipoUsuario (Paciente o Doctor) para identificar por medio de un procedimiento a qué tipo pertenece cada usuario
 */
 ALTER TABLE Paciente ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Paciente';
 ALTER TABLE Doctor ADD COLUMN TipoUsuario VARCHAR(10) NOT NULL DEFAULT 'Doctor';
-
+/*
+Continuando con las insercciones de datos en la tabla Paciente
+*/
 INSERT INTO Paciente VALUES
-('P00000001', 950022434, 'root', 'Pauleth', 'Tandazo', 22, STR_TO_DATE('2002-07-23', '%Y-%m-%d'), 'Centro', Paciente),
-('P00000002', 950022433, 'shaggy123', 'Domenica', 'Moran', 21, STR_TO_DATE('2003-05-04', '%Y-%m-%d'), 'Mucho Lote 2', 'Paciente'),
-('P00000003', 456789123, 'contraseña789', 'Luis', 'Fernández', 45, '1978-11-10', 'Calle 789, Centro',Paciente),
-('P00000004', 321654987, 'contraseña321', 'Ana', 'Martínez', 35, '1989-05-30', 'Avenida 321, Sur',Paciente),
-('P00000005', 654987321, 'contraseña654', 'Carlos', 'Rodríguez', 50, '1973-09-12', 'Calle 654, Norte',Paciente);
+('P00000002', 950022433, 'shaggy123', 'Domenica', 'Moran', 21, STR_TO_DATE('2003-05-04', '%Y-%m-%d'), 'Mucho Lote 2', 'Paciente');
+INSERT INTO Paciente VALUES
+('P00000003', 456789123, '1234', 'Luis', 'Fernández', 45, '1978-11-10', 'Calle 789, Centro','Paciente'),
+('P00000004', 321654987, '2313', 'Ana', 'Martínez', 35, '1989-05-30', 'Avenida 321, Sur','Paciente'),
+('P00000005', 654987321, '2212', 'Carlos', 'Rodríguez', 50, '1973-09-12', 'Calle 654, Norte','Paciente');
+select*from Paciente;
+/*
+Continuando con la insercciones de datos en la tabla Doctor
+*/
 INSERT INTO Doctor VALUES
-('D00000001', 702964545, 'admin', 'Melanie', 'Briones',Doctor);
 ('D00000002', 923651020, '123', 'Ian', 'Cedeño', 'Doctor');
-('D00000003', 334455667, 'pass9101', 'Luis', 'García',Doctor),
-('D00000004', 445566778, 'pass1122', 'Laura', 'Vázquez',Doctor),
-('D00000005', 556677889, 'pass2233', 'Fernando', 'Lopez',Doctor);
+INSERT INTO Doctor VALUES
+('D00000003', 334455667, 'pass9101', 'Luis', 'García','Doctor'),
+('D00000004', 445566778, 'pass1122', 'Laura', 'Vázquez','Doctor'),
+('D00000005', 556677889, 'pass2233', 'Fernando', 'Lopez','Doctor');
+select * from Doctor;
 
 /*
 Creando la tabla Especializacion
 */
- 
+ CREATE TABLE IF NOT EXISTS Especializacion (
+    Especializacion_id CHAR(9) ,
+    Doctor_id CHAR(9) ,
+    nombre_de_especializacion VARCHAR(45) ,
+    Descripcion_Especializacion VARCHAR(255),
+    anios_experiencia INT 
+);
 /*
 Consideramos pertienente trabajar con una sola tabla llamada Especialización observamos que se podía unir todo en una sola
 tabla, realmente no era necesario construir 3 tablas como en el modelo original y sobre todo simplifica las consultas 
@@ -177,7 +195,7 @@ VALUES
 ('P00000003', 'DP0000001', '2024-06-08', 102, '2024-06-18'),
 ('P00000004', 'DP0000003', '2024-06-10', 301, '2024-06-20'),
 ('P00000005', 'DP0000002', '2024-06-12', 208, '2024-06-22');
-
+select*from PacientexDepartamento;
 /*
 Creando la tabla Tratamiento
 */
@@ -212,13 +230,13 @@ ALTER TABLE Tratamiento ADD CONSTRAINT Pk_Tratamiento PRIMARY KEY (Tratamiento_i
 /*
 Insertando los datos de la tabla Tratamiento
 */
-INSERT INTO Tratamiento (Tratamiento_id, precio_Tratamiento, Fecha_Inicio_Tratamiento, Enfermedad_a_tratar, Paciente_id, Doctor_id, Fecha_Fin_Tratamiento)
-VALUES
-('T00000001', 1500.00, '2024-05-01', 'Hipertensión', 'P000001', 'D000001', '2024-05-15'),
-('T00000002', 800.00, '2024-05-10', 'Asma', 'P000002', 'D000002', '2024-06-10'),
-('T00000003', 2000.00, '2024-05-20', 'Diabetes Tipo 2', 'P000003', 'D000003', NULL),
-('T00000004', 1200.00, '2024-06-01', 'Eczema', 'P000004', 'D000004', '2024-06-20'),
-('T00000005', 1700.00, '2024-06-15', 'Cáncer de piel', 'P000005', 'D000005', NULL);
+INSERT INTO Tratamiento (Tratamiento_id, precio_Tratamiento, Fecha_Inicio_Tratamiento, Enfermedad_a_tratar, Paciente_id, Doctor_id, Fecha_Fin_Tratamiento) VALUES 
+('T00000001', 1500.00, '2024-05-01', 'Hipertensión', 'P00000001', 'D00000001', '2024-05-15'),
+('T00000002', 800.00, '2024-05-10', 'Asma', 'P00000002', 'D00000002', '2024-06-10'),
+('T00000003', 2000.00, '2024-05-20', 'Diabetes Tipo 2', 'P00000003', 'D00000003', NULL),
+('T00000004', 1200.00, '2024-06-01', 'Eczema', 'P00000004', 'D00000004', '2024-06-20'),
+('T00000005', 1700.00, '2024-06-15', 'Cáncer de piel', 'P00000005', 'D00000005', NULL);
+select*from Tratamiento;
 
 /*
 Creando la tabla Factura
@@ -256,7 +274,7 @@ VALUES
 ('F00000003', 'T00000003', 'Factura por tratamiento de diabetes tipo 2, incluye consultas y medicamentos', '2024-05-21', 2000.00),
 ('F00000004', 'T00000004', 'Factura por tratamiento de eczema con cremas y consultas', '2024-06-02', 1200.00),
 ('F00000005', 'T00000005', 'Factura por tratamiento de cáncer de piel, incluye cirugía y seguimiento', '2024-06-16', 1700.00);
-
+select*from Factura;
 /*
 Creando la tabla Medicamento
 */
@@ -268,15 +286,18 @@ CREATE TABLE IF NOT EXISTS Medicamento (
     Total DECIMAL(10,2) 
   
 );
+
 ALTER TABLE Medicamento ADD CONSTRAINT Pk_Medicamento PRIMARY KEY (Medicamento_id);
 ALTER TABLE Medicamento
     MODIFY Medicamento_id CHAR(9) NOT NULL,
 	MODIFY Valor_Medicamento DECIMAL(10, 2) NOT NULL,
     MODIFY Nombre VARCHAR(45) NOT NULL,
     MODIFY Unidad VARCHAR(45) NOT NULL;
+    ALTER TABLE Medicamento RENAME TO Detalle_Prescripción_Medica;
+
 
 /*
-Insertando los valores de la tabla
+Insertando los valores de la tabla Medicamento
 */
 INSERT INTO Medicamento (Medicamento_id, Valor_Medicamento, Nombre, Unidad, Total)
 VALUES
@@ -285,9 +306,9 @@ VALUES
 ('M000003', 75.00, 'Metformina', 60, 4500.00),
 ('M000004', 40.00, 'Clobetasol', 15, 600.00),
 ('M000005', 90.00, 'Doxorubicina', 10, 900.00);
-
+select *from Medicamento;
 /*
-Creando la tabla TratamientoXMedicamento recordar que
+Creando la tabla TratamientoXMedicamento 
 */
 CREATE TABLE IF NOT EXISTS TratamientoXMedicamento (
     Tratamiento_id CHAR(9),
@@ -302,18 +323,20 @@ ALTER TABLE TratamientoXMedicamento ADD CONSTRAINT Fk_Medicamento_Tratamiento FO
 
 
 /*
-Insertando los valores de la tabla
+Insertando los valores de la tabla TratamientoxMedicamento
 */
 
 INSERT INTO TratamientoXMedicamento (Tratamiento_id, Medicamento_id)
 VALUES
-('T00000001', 'M00000001'),
-('T00000001', 'M00000002'),
-('T00000002', 'M00000003'),
-('T00000003', 'M00000004'),
-('T00000004', 'M00000005');
+('T00000001', 'M000001'),
+('T00000001', 'M000002'),
+('T00000002', 'M000003'),
+('T00000003', 'M000004'),
+('T00000004', 'M000005');
+select * from TratamientoXMedicamento;
 
-
+SELECT * FROM Tratamiento WHERE Tratamiento_id IN ('T00000001', 'T00000002', 'T00000003', 'T00000004');
+SELECT * FROM Medicamento WHERE Medicamento_id IN ('M000001', 'M000002', 'M000003', 'M000004', 'M000005');
 
 
 

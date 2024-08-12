@@ -89,7 +89,7 @@ public class EntornoDoctorController {
             buttonBox.setPadding(new Insets(20, 0, 0, 0)); // Añadir espacio superior a los botones
             buttonBox.setAlignment(Pos.CENTER);
             infoGrid.add(buttonBox, 0, 6, 2, 1); // Colocar botones en la fila 7 y que abarquen dos columnas
-
+            NombreDoctor.setStyle("-fx-alignment: CENTER;");
             NombreDoctor.getChildren().addAll(bienvenidaLabel, avatar, infoGrid);
             System.out.println("Datos del doctor cargados correctamente."); // Debug
         } else {
@@ -273,6 +273,21 @@ public class EntornoDoctorController {
             stage.show();
         } catch (IOException e) {
             showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        }
+    }
+    @FXML
+    private void handleEspecialidad(){
+         try {
+            FXMLLoader pantallaEspecialidad = new FXMLLoader(getClass().getResource("Especialidades.fxml"));
+            Parent root = pantallaEspecialidad.load();
+            EspecialidadesController controller = pantallaEspecialidad.getController();
+            controller.setCedula(this.cedula);
+
+            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de Especialidad: " + e.getMessage());
         }
     }
 }

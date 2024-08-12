@@ -6,6 +6,7 @@ module com.espol.edu.ec.hospital {
 
     opens com.espol.edu.ec.hospital to javafx.fxml;
         opens Departamento to javafx.base;
+        opens Doctor to javafx.base;
 
     exports com.espol.edu.ec.hospital;
 }

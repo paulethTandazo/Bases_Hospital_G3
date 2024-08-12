@@ -1,7 +1,6 @@
 package com.espol.edu.ec.hospital;
 
 import Departamento.Departamento;
-import Doctor.InformacionDoctor;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -140,7 +139,21 @@ public class TablasPacientesController {
             showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
         }
     }
+   @FXML
+    private void handleEspecialidad(){
+         try {
+            FXMLLoader pantallaEspecialidad = new FXMLLoader(getClass().getResource("Especialidades.fxml"));
+            Parent root = pantallaEspecialidad.load();
+            EspecialidadesController controller = pantallaEspecialidad.getController();
+            controller.setCedula(this.cedula);
 
+            Stage stage = (Stage) TablaDepartamento.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de Especialidad: " + e.getMessage());
+        }
+    }
     private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);

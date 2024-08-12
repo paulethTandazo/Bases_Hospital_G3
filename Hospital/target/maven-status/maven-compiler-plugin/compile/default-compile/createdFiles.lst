@@ -4,6 +4,7 @@ com\espol\edu\ec\hospital\TratamientoPacienteController.class
 Doctor\InformacionDoctor.class
 com\espol\edu\ec\hospital\DoctorLoginController.class
 module-info.class
+com\espol\edu\ec\hospital\EspecialidadesController.class
 com\espol\edu\ec\hospital\ConexionSql.class
 com\espol\edu\ec\hospital\TipoUsuarioController.class
 com\espol\edu\ec\hospital\InformacionPacienteController.class

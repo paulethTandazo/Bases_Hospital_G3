@@ -434,6 +434,12 @@ DELIMITER ;
 /*
 Comprobando si las querys se realizan con éxito
 */
+use grupo3_hospital;
+SELECT d.Doctor_id, e.Especializacion_id, e.nombre_de_especializacion, e.Descripcion_Especializacion, e.anios_experiencia
+FROM Doctor d
+JOIN Especializacion e ON d.Doctor_id = e.Doctor_id
+WHERE d.Cedula = 0702964545;
+
 SELECT * FROM Paciente WHERE Cedula=0950022434;
 select * from Doctor where cedula=0702964545;
 select * from Experiencia where Doctor_id='D00000001';

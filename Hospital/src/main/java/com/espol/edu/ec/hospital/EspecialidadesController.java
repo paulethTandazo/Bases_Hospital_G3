@@ -140,49 +140,49 @@ public class EspecialidadesController {
         // Agregar la nueva especialidad a la tabla
         TablaxEspecialidades.getItems().add(nuevaEspecialidad);
     }
-@FXML
-private void handleGuardar() {
-    ObservableList<InformacionDoctor> especialidades = TablaxEspecialidades.getItems();
-    
-    try (Connection con = new ConexionSql().estableceConexion()) {
-        // Recorrer cada especialidad en la tabla
-        for (InformacionDoctor especialidad : especialidades) {
-            if (especialidad.getDoctorId() == null || especialidad.getDoctorId().isEmpty()) {
-                especialidad.setDoctorId(getDoctorIdByCedula(con, this.cedula)); // Asignar el Doctor_id correspondiente si no está definido
-            }
-            
-            // Verificar si la especialidad ya existe en la base de datos y decidir si se debe insertar o actualizar
-            if (especialidadEsNueva(especialidad)) {
-                // Insertar nueva especialidad
-                String insertQuery = "INSERT INTO Especializacion (Doctor_id, nombre_de_especializacion, Descripcion_Especializacion, anios_experiencia) "
-                                   + "VALUES (?, ?, ?, ?)";
-                try (PreparedStatement ps = con.prepareStatement(insertQuery)) {
-                    ps.setString(1, especialidad.getDoctor_id());
-                    ps.setString(2, especialidad.getEspecializacion());
-                    ps.setString(3, especialidad.getDescripcionCargo());
-                    ps.setInt(4, especialidad.getAniosExperiencia());
-                    ps.executeUpdate();
-                }
-            } else {
-                // Actualizar especialidad existente
-                String updateQuery = "UPDATE Especializacion SET nombre_de_especializacion = ?, Descripcion_Especializacion = ?, anios_experiencia = ? "
-                                   + "WHERE Doctor_id = ? AND nombre_de_especializacion = ?";
-                try (PreparedStatement ps = con.prepareStatement(updateQuery)) {
-                    ps.setString(1, especialidad.);
-                    ps.setString(2, especialidad.getDescripcionEspecializacion());
-                    ps.setInt(3, especialidad.getAniosExperiencia());
-                    ps.setString(4, especialidad.getDoctorId());
-                    ps.setString(5, especialidad.getNombreEspecializacion()); // Asumiendo que el nombre de la especialización no cambia
-                    ps.executeUpdate();
-                }
-            }
-        }
-        System.out.println("Datos guardados exitosamente");
-    } catch (SQLException e) {
-        e.printStackTrace();
-        showErrorAlert("Error al guardar los datos: " + e.getMessage());
-    }
-}
+//@FXML
+//private void handleGuardar() {
+//    ObservableList<InformacionDoctor> especialidades = TablaxEspecialidades.getItems();
+//    
+//    try (Connection con = new ConexionSql().estableceConexion()) {
+//        // Recorrer cada especialidad en la tabla
+//        for (InformacionDoctor especialidad : especialidades) {
+//            if (especialidad.getDoctorId() == null || especialidad.getDoctorId().isEmpty()) {
+//                especialidad.setDoctorId(getDoctorIdByCedula(con, this.cedula)); // Asignar el Doctor_id correspondiente si no está definido
+//            }
+//            
+//            // Verificar si la especialidad ya existe en la base de datos y decidir si se debe insertar o actualizar
+//            if (especialidadEsNueva(especialidad)) {
+//                // Insertar nueva especialidad
+//                String insertQuery = "INSERT INTO Especializacion (Doctor_id, nombre_de_especializacion, Descripcion_Especializacion, anios_experiencia) "
+//                                   + "VALUES (?, ?, ?, ?)";
+//                try (PreparedStatement ps = con.prepareStatement(insertQuery)) {
+//                    ps.setString(1, especialidad.getDoctor_id());
+//                    ps.setString(2, especialidad.getEspecializacion());
+//                    ps.setString(3, especialidad.getDescripcionCargo());
+//                    ps.setInt(4, especialidad.getAniosExperiencia());
+//                    ps.executeUpdate();
+//                }
+//            } else {
+//                // Actualizar especialidad existente
+//                String updateQuery = "UPDATE Especializacion SET nombre_de_especializacion = ?, Descripcion_Especializacion = ?, anios_experiencia = ? "
+//                                   + "WHERE Doctor_id = ? AND nombre_de_especializacion = ?";
+//                try (PreparedStatement ps = con.prepareStatement(updateQuery)) {
+//                    ps.setString(1, especialidad.);
+//                    ps.setString(2, especialidad.getDescripcionEspecializacion());
+//                    ps.setInt(3, especialidad.getAniosExperiencia());
+//                    ps.setString(4, especialidad.getDoctorId());
+//                    ps.setString(5, especialidad.getNombreEspecializacion()); // Asumiendo que el nombre de la especialización no cambia
+//                    ps.executeUpdate();
+//                }
+//            }
+//        }
+//        System.out.println("Datos guardados exitosamente");
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//        showErrorAlert("Error al guardar los datos: " + e.getMessage());
+//    }
+//}
 
     @FXML
     private void handlePaginaDoctor() {

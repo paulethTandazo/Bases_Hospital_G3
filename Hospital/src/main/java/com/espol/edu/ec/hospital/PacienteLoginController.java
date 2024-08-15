@@ -15,6 +15,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -99,5 +101,12 @@ public class PacienteLoginController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    
+    @FXML
+    private void handleRegistrar(){
+        try {
+            App.setRoot("RegistrarsePaciente");
+        } catch (IOException ex) {
+            Logger.getLogger(PacienteLoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="316.0" style="-fx-background-color: FFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.edu.ec.hospital.PacienteLoginController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="316.0" style="-fx-background-color: FFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.espol.edu.ec.hospital.PacienteLoginController">
    <children>
       <HBox prefHeight="85.0" prefWidth="316.0">
          <children>
@@ -19,9 +19,9 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#handleBack" style="-fx-background-color: FFF;">
                      <graphic>
-                        <ImageView fitHeight="28.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="33.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Imagenes/flecha-izquierda.png" />
+                              <Image url="@../../../../../Imagenes/atras%20(1).png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -47,7 +47,7 @@
       </HBox>
       <VBox alignment="CENTER" prefHeight="176.0" prefWidth="316.0" style="-fx-background-color: FFFF;">
          <children>
-            <ImageView fitHeight="181.0" fitWidth="189.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="201.0" fitWidth="216.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../Imagenes/ImagenLogin.png" />
                </image>
@@ -97,14 +97,22 @@
             <Insets left="35.0" right="35.0" />
          </padding>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="96.0" prefWidth="332.0">
+      <VBox alignment="CENTER" prefHeight="159.0" prefWidth="316.0" spacing="25.0">
          <children>
-            <Button fx:id="Ingresar" mnemonicParsing="false" onAction="#comprobarUsuario" prefHeight="32.0" prefWidth="148.0" style="-fx-background-color: #2da1e0;" text="Ingresar" textFill="WHITE">
+            <Button fx:id="Ingresar" mnemonicParsing="false" onAction="#comprobarUsuario" prefHeight="32.0" prefWidth="199.0" style="-fx-background-color: #2da1e0;" text="Ingresar" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleRegistrar" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: FFFF;" text="No tienes cuenta? Registrate" textFill="#2da1e0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Button>
          </children>
+         <padding>
+            <Insets top="4.0" />
+         </padding>
       </VBox>
    </children>
 </VBox>

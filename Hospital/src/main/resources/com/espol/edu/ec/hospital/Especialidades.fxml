@@ -21,7 +21,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/contact-information%20(2).png" />
+                                    <Image url="@../../../../../Imagenes/informacion-personal.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -60,9 +60,9 @@
                      <children>
                         <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="    Pacientes" textFill="WHITE">
                            <graphic>
-                              <ImageView fitHeight="44.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/paciente%20(1).png" />
+                                    <Image url="@../../../../../Imagenes/paciente%20(2).png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -75,16 +75,16 @@
                         </Button>
                      </children>
                      <padding>
-                        <Insets left="8.0" />
+                        <Insets left="3.0" />
                      </padding>
                   </VBox>
                   <VBox prefHeight="95.0" prefWidth="188.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="Departamento" textFill="WHITE">
+                        <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="   Departamento" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/departamento.png" />
+                                    <Image url="@../../../../../Imagenes/hospital.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -94,7 +94,7 @@
                         </Button>
                      </children>
                      <padding>
-                        <Insets left="21.0" />
+                        <Insets left="17.0" />
                      </padding>
                      <opaqueInsets>
                         <Insets />

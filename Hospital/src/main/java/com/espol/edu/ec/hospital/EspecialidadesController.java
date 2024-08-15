@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -50,9 +52,11 @@ public class EspecialidadesController {
     private final Button Guardar = new Button();
     private final HBox grupoBotones = new HBox();
     private int cedula;
+    private boolean isEditing = false;
 
     public void setCedula(int cedula) {
-        System.out.println("Cédula recibida: " + cedula); // Debug
+        this.cedula = cedula;
+        System.out.println("Cédula recibida dentro del controlador especialidades: " + cedula); // Debug
         initialize();
     }
 
@@ -97,32 +101,87 @@ public class EspecialidadesController {
     }
 
     private ObservableList<InformacionDoctor> getEspecialidades() {
-    ObservableList<InformacionDoctor> doctorList = FXCollections.observableArrayList();
+        ObservableList<InformacionDoctor> doctorList = FXCollections.observableArrayList();
 
-    // Conexión a la base de datos y obtención de datos
-    try (Connection con = new ConexionSql().estableceConexion()) {
-        String consulta = "SELECT d.Doctor_id, e.nombre_de_especializacion, e.Descripcion_Especializacion, e.anios_experiencia "
-                + "FROM Doctor d "
-                + "JOIN Especializacion e ON d.Doctor_id = e.Doctor_id "
-                + "WHERE d.Cedula = ?";
+        // Conexión a la base de datos y obtención de datos
+        try (Connection con = new ConexionSql().estableceConexion()) {
+            String consulta = "SELECT e.Doctor_id, e.nombre_de_especializacion, e.Descripcion_Especializacion, e.anios_experiencia "
+                    + "FROM Especializacion e "
+                    + "JOIN Doctor d ON e.Doctor_id = d.Doctor_id "
+                    + "WHERE d.Cedula = ?";
 
-        PreparedStatement st = con.prepareStatement(consulta);
-        st.setInt(1, this.cedula);
-        ResultSet rs = st.executeQuery();
+            PreparedStatement st = con.prepareStatement(consulta);
+            st.setInt(1, this.cedula); // Usar la cédula para buscar el Doctor_id
+            ResultSet rs = st.executeQuery();
 
-        while (rs.next()) {
-            String doctorId = rs.getString("Doctor_id");
-            String nombreEspecializacion = rs.getString("nombreEspecializacion");
-            String descripcionEspecializacion = rs.getString("descripcionEspecializacion");
-            int aniosExperiencia = rs.getInt("aniosExperiencia");
-           
-           doctorList.add(new InformacionDoctor(doctorId, nombreEspecializacion, descripcionEspecializacion, aniosExperiencia));
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron especialidades para la cédula: " + this.cedula);
+            }
+
+            while (rs.next()) {
+                String doctorId = rs.getString("Doctor_id");
+                String nombreEspecializacion = rs.getString("nombre_de_especializacion");
+                String descripcionEspecializacion = rs.getString("Descripcion_Especializacion");
+                int aniosExperiencia = rs.getInt("anios_experiencia");
+
+                doctorList.add(new InformacionDoctor(doctorId, nombreEspecializacion, descripcionEspecializacion, aniosExperiencia));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return doctorList;
     }
 
-    return doctorList;
+    @FXML
+    private void handleNuevo() {
+        InformacionDoctor nuevaEspecialidad = new InformacionDoctor("", "", "", 0);
+
+        // Agregar la nueva especialidad a la tabla
+        TablaxEspecialidades.getItems().add(nuevaEspecialidad);
+    }
+@FXML
+private void handleGuardar() {
+    ObservableList<InformacionDoctor> especialidades = TablaxEspecialidades.getItems();
+    
+    try (Connection con = new ConexionSql().estableceConexion()) {
+        // Recorrer cada especialidad en la tabla
+        for (InformacionDoctor especialidad : especialidades) {
+            if (especialidad.getDoctorId() == null || especialidad.getDoctorId().isEmpty()) {
+                especialidad.setDoctorId(getDoctorIdByCedula(con, this.cedula)); // Asignar el Doctor_id correspondiente si no está definido
+            }
+            
+            // Verificar si la especialidad ya existe en la base de datos y decidir si se debe insertar o actualizar
+            if (especialidadEsNueva(especialidad)) {
+                // Insertar nueva especialidad
+                String insertQuery = "INSERT INTO Especializacion (Doctor_id, nombre_de_especializacion, Descripcion_Especializacion, anios_experiencia) "
+                                   + "VALUES (?, ?, ?, ?)";
+                try (PreparedStatement ps = con.prepareStatement(insertQuery)) {
+                    ps.setString(1, especialidad.getDoctor_id());
+                    ps.setString(2, especialidad.getEspecializacion());
+                    ps.setString(3, especialidad.getDescripcionCargo());
+                    ps.setInt(4, especialidad.getAniosExperiencia());
+                    ps.executeUpdate();
+                }
+            } else {
+                // Actualizar especialidad existente
+                String updateQuery = "UPDATE Especializacion SET nombre_de_especializacion = ?, Descripcion_Especializacion = ?, anios_experiencia = ? "
+                                   + "WHERE Doctor_id = ? AND nombre_de_especializacion = ?";
+                try (PreparedStatement ps = con.prepareStatement(updateQuery)) {
+                    ps.setString(1, especialidad.);
+                    ps.setString(2, especialidad.getDescripcionEspecializacion());
+                    ps.setInt(3, especialidad.getAniosExperiencia());
+                    ps.setString(4, especialidad.getDoctorId());
+                    ps.setString(5, especialidad.getNombreEspecializacion()); // Asumiendo que el nombre de la especialización no cambia
+                    ps.executeUpdate();
+                }
+            }
+        }
+        System.out.println("Datos guardados exitosamente");
+    } catch (SQLException e) {
+        e.printStackTrace();
+        showErrorAlert("Error al guardar los datos: " + e.getMessage());
+    }
 }
 
     @FXML

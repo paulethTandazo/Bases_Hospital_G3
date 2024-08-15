@@ -21,7 +21,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/contact-information%20(2).png" />
+                                    <Image url="@../../../../../Imagenes/informacion-personal.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -41,9 +41,9 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleTratamiento" style="-fx-background-color: #4DB7E8;" text="    Tratamientos" textFill="WHITE">
                            <graphic>
-                              <ImageView fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="39.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/tratamiento%20(2).png" />
+                                    <Image url="@../../../../../Imagenes/registros-medicos.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -65,7 +65,7 @@
                            <graphic>
                               <ImageView fitHeight="39.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/medicamento%20(1).png" />
+                                    <Image url="@../../../../../Imagenes/medico%20(1).png" />
                                  </image>
                               </ImageView>
                            </graphic>

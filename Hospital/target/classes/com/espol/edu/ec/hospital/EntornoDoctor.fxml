@@ -21,7 +21,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/contact-information%20(2).png" />
+                                    <Image url="@../../../../../Imagenes/informacion-personal.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -62,7 +62,7 @@
                            <graphic>
                               <ImageView fitHeight="44.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/paciente%20(1).png" />
+                                    <Image url="@../../../../../Imagenes/paciente%20(2).png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -84,7 +84,7 @@
                            <graphic>
                               <ImageView fitHeight="42.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../Imagenes/departamento.png" />
+                                    <Image url="@../../../../../Imagenes/hospital.png" />
                                  </image>
                               </ImageView>
                            </graphic>

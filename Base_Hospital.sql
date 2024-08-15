@@ -335,6 +335,8 @@ VALUES
 ('T00000004', 'M000005');
 select * from TratamientoXMedicamento;
 
+    
+
 SELECT * FROM Tratamiento WHERE Tratamiento_id IN ('T00000001', 'T00000002', 'T00000003', 'T00000004');
 SELECT * FROM Medicamento WHERE Medicamento_id IN ('M000001', 'M000002', 'M000003', 'M000004', 'M000005');
 
@@ -411,6 +413,35 @@ BEGIN
     END IF;
 
     RETURN logeado;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE GetNextPacienteId(OUT new_id CHAR(9))
+BEGIN
+    DECLARE last_id CHAR(9);
+    DECLARE prefix CHAR(1) DEFAULT 'P';
+    DECLARE num_part INT;
+
+    -- Obtener el último ID generado
+    SELECT Paciente_id INTO last_id
+    FROM Paciente
+    ORDER BY Paciente_id DESC
+    LIMIT 1;
+
+    -- Si no hay registros, empezar desde el primer ID
+    IF last_id IS NULL THEN
+        SET new_id = CONCAT(prefix, LPAD(1, 8, '0'));
+    ELSE
+        -- Extraer la parte numérica del último ID
+        SET num_part = CAST(SUBSTRING(last_id, 2) AS UNSIGNED) + 1;
+
+        -- Crear el nuevo ID
+        SET new_id = CONCAT(prefix, LPAD(num_part, 8, '0'));
+    END IF;
 END //
 
 DELIMITER ;

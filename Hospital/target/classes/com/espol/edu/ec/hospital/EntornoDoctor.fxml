@@ -17,7 +17,7 @@
                <children>
                   <VBox prefHeight="57.0" prefWidth="200.0" style="-fx-background-color: #4DB7E8;">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #4DB7E8;" text="    Información " textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#handleVolver" style="-fx-background-color: #4DB7E8;" text="    Información " textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

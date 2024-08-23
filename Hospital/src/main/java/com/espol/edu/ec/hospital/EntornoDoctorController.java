@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,7 +20,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -40,7 +45,7 @@ public class EntornoDoctorController {
     public GridPane infoGrid;
     @FXML
     private VBox NombreDoctor;
-
+    //Parte de la informacion del doctor
     private Label bienvenidaLabel;
     private TextField doctorIdField;
     private TextField nombreField;
@@ -48,19 +53,109 @@ public class EntornoDoctorController {
     private TextField especializacionField;
     private TextField descripcionField;
     private TextField aniosExperienciaField;
+//Parte informacion de las especialidades 
+    
+    private boolean isEditing = false;
+    
+   private void cargarEspecialidades (){
+    Label label1 = new Label("Tus Especialidades");
+    VBox Espaciado = new VBox();
+    Button Nuevo = new Button();
+    Button Editar = new Button();
+    Button Guardar = new Button();
+    HBox grupoBotones = new HBox();
+            TableView<InformacionDoctor> TablaxEspecialidades = new TableView<>();
+            // Creando las columnas para llenar luego los datos
+            TableColumn<InformacionDoctor, String> colCodigoDoctor = new TableColumn<>("Código Doctor");
+            colCodigoDoctor.setCellValueFactory(new PropertyValueFactory<>("Doctor_id"));
+            colCodigoDoctor.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionDoctor, String> colNombre = new TableColumn<>("Especialidad");
+            colNombre.setCellValueFactory(new PropertyValueFactory<>("especializacion"));
+            colNombre.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionDoctor, String> colEspecialidad = new TableColumn<>("Descripción");
+            colEspecialidad.setCellValueFactory(new PropertyValueFactory<>("DescripcionCargo"));
+            colEspecialidad.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionDoctor, Integer> colAnios = new TableColumn<>("Años Experiencia");
+            colAnios.setCellValueFactory(new PropertyValueFactory<>("aniosExperiencia"));
+            colAnios.setStyle("-fx-alignment: CENTER;");
+            Nuevo.setText("Nuevo");
+            estiloBoton(Nuevo, "Imagenes/boton-editar.png", "#FFFFFF", "#000000", true);
+            Editar.setText("Editar");
+            estiloBoton(Editar, "Imagenes/boton-editar.png", "#FFFFFF", "#000000", true);
+            Guardar.setText("Guardar");
+            estiloBoton(Guardar, "Imagenes/disquete.png", "#FFFFFF", "#000000", true);
+            label1.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
+            Espaciado.setSpacing(50);
+            grupoBotones.getChildren().addAll(Nuevo, Editar, Guardar);
+            grupoBotones.setStyle("-fx-alignment: CENTER;");
+            grupoBotones.setSpacing(50);
+            Espaciado.getChildren().add(grupoBotones);
+            TablaxEspecialidades.getColumns().addAll(colCodigoDoctor, colNombre, colEspecialidad, colAnios);
+            NombreDoctor.getChildren().addAll(label1, TablaxEspecialidades, Espaciado);
+            NombreDoctor.setPadding(new Insets(10, 20, 10, 20));
+            NombreDoctor.setSpacing(50);
+            System.out.println("realizo cambios");
+        // Llenar el TableView con datos
+        TablaxEspecialidades.setItems(getEspecialidades());
+   }
+    private ObservableList<InformacionDoctor> getEspecialidades() {
+        ObservableList<InformacionDoctor> doctorList = FXCollections.observableArrayList();
 
+        // Conexión a la base de datos y obtención de datos
+        try (Connection con = new ConexionSql().estableceConexion()) {
+            String consulta = "SELECT e.Doctor_id, e.nombre_de_especializacion, e.Descripcion_Especializacion, e.anios_experiencia "
+                    + "FROM Especializacion e "
+                    + "JOIN Doctor d ON e.Doctor_id = d.Doctor_id "
+                    + "WHERE d.Cedula = ?";
+
+            PreparedStatement st = con.prepareStatement(consulta);
+            st.setInt(1, this.cedula); // Usar la cédula para buscar el Doctor_id
+            ResultSet rs = st.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron especialidades para la cédula: " + this.cedula);
+            }
+
+            while (rs.next()) {
+                String doctorId = rs.getString("Doctor_id");
+                String nombreEspecializacion = rs.getString("nombre_de_especializacion");
+                String descripcionEspecializacion = rs.getString("Descripcion_Especializacion");
+                int aniosExperiencia = rs.getInt("anios_experiencia");
+
+                doctorList.add(new InformacionDoctor(doctorId, nombreEspecializacion, descripcionEspecializacion, aniosExperiencia));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return doctorList;
+    }
+    
+    
+    
     public void setCedula(int cedula) {
         this.cedula = cedula;
         System.out.println("Cédula recibida: " + cedula); // Debug
-        initialize();
     }
+    
 
     public void initialize() {
         // Limpiar el GridPane y VBox antes de agregar elementos
+        InformacionDoctor doctor = InformacionDoctor.getDoctorByCedula(cedula);
+        cargarDatosDoctor(doctor);
+    }
+    
+    //Hacer todos los cambios en la misma pagina solo limpiando el Vbox NombreDoctor
+    @FXML
+    private void handleVolver() {
         infoGrid.getChildren().clear();
         NombreDoctor.getChildren().clear();
-
         InformacionDoctor doctor = InformacionDoctor.getDoctorByCedula(cedula);
+        cargarDatosDoctor(doctor);
+    }
+    
+    private void cargarDatosDoctor(InformacionDoctor doctor){
+        
         if (doctor != null) {
             bienvenidaLabel = new Label("Bienvenid@ de nuevo, " + doctor.getNombre());
             System.out.println("ENTROOOOOO");
@@ -96,6 +191,8 @@ public class EntornoDoctorController {
             System.out.println("Doctor no encontrado."); // Debug
         }
     }
+    
+    
 
     @FXML
     private void handleSalir() {
@@ -277,17 +374,9 @@ public class EntornoDoctorController {
     }
     @FXML
     private void handleEspecialidad(){
-         try {
-            FXMLLoader pantallaEspecialidad = new FXMLLoader(getClass().getResource("Especialidades.fxml"));
-            Parent root = pantallaEspecialidad.load();
-            EspecialidadesController controller = pantallaEspecialidad.getController();
-            controller.setCedula(this.cedula);
-
-            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Error al cargar la vista de Especialidad: " + e.getMessage());
-        }
+         infoGrid.getChildren().clear();
+        NombreDoctor.getChildren().clear();
+         cargarEspecialidades ();
+         System.out.println("entro");
     }
 }

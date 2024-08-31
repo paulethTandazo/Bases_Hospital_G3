@@ -13,7 +13,7 @@
    <children>
       <HBox prefHeight="547.0" prefWidth="543.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="566.0" prefWidth="192.0" spacing="50.0" style="-fx-background-color: #4DB7E8;">
+            <VBox alignment="CENTER" prefHeight="532.0" prefWidth="191.0" spacing="50.0" style="-fx-background-color: #4DB7E8;">
                <children>
                   <VBox prefHeight="57.0" prefWidth="200.0" style="-fx-background-color: #4DB7E8;">
                      <children>
@@ -41,7 +41,7 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleTratamiento" style="-fx-background-color: #4DB7E8;" text="    Tratamientos" textFill="WHITE">
                            <graphic>
-                              <ImageView fitHeight="39.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="40.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../../../../Imagenes/registros-medicos.png" />
                                  </image>

@@ -54,7 +54,7 @@ public class MedicinaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         if (TablaxMedicinas == null) {
+           if (TablaxMedicinas == null) {
             TablaxMedicinas = new TableView<>();
             
             // Configuración de las columnas
@@ -66,17 +66,21 @@ public class MedicinaController implements Initializable {
             colNombreMedicamento.setCellValueFactory(new PropertyValueFactory<>("nombreMedicamento"));
             colNombreMedicamento.setStyle("-fx-alignment: CENTER;");
             
-            TableColumn<Medicinas, String> colNombreDoctor = new TableColumn<>("Doctor");
+            TableColumn<Medicinas, String> colNombreDoctor = new TableColumn<>("Nombre Doctor");
             colNombreDoctor.setCellValueFactory(new PropertyValueFactory<>("nombreDoctor"));
             colNombreDoctor.setStyle("-fx-alignment: CENTER;");
             
+            TableColumn<Medicinas, String> colApellidoDoctor = new TableColumn<>("Apellido Doctor");
+            colApellidoDoctor.setCellValueFactory(new PropertyValueFactory<>("apellidoDoctor"));
+            colApellidoDoctor.setStyle("-fx-alignment: CENTER;");
+            
             // Agregar columnas al TableView
-            TablaxMedicinas.getColumns().addAll(colCodigoTratamiento, colNombreMedicamento, colNombreDoctor);
+            TablaxMedicinas.getColumns().addAll(colCodigoTratamiento, colNombreMedicamento, colNombreDoctor, colApellidoDoctor);
             
             // Añadir el TableView al VBox
             TratamientoPacienteVbox.getChildren().add(TablaxMedicinas);
         }
-    }    
+    }
     
         private void loadMedicinas() {
         // Llenar la tabla con los datos
@@ -99,19 +103,20 @@ public class MedicinaController implements Initializable {
             showErrorAlert("Error al cargar la vista de información del paciente: " + e.getMessage());
         }
     }
-    
-     private ObservableList<Medicinas> getMedicinas(int c) {
+   private ObservableList<Medicinas> getMedicinas(int c) {
         ObservableList<Medicinas> medicinasList = FXCollections.observableArrayList();
 
         // Conexión a la base de datos y obtención de datos
         try (Connection con = new ConexionSql().estableceConexion()) {
-            String consulta = "SELECT t.Tratamiento_id, m.Nombre AS nombreMedicamento, d.Nombre AS nombreDoctor "
+            String consulta = "SELECT t.Tratamiento_id, GROUP_CONCAT(m.Nombre SEPARATOR ', ') AS nombreMedicamentos, "
+                            + "d.Nombre AS nombreDoctor, d.Apellido AS apellidoDoctor "
                             + "FROM Tratamiento t "
                             + "JOIN TratamientoXMedicamento txm ON t.Tratamiento_id = txm.Tratamiento_id "
                             + "JOIN Medicamento m ON txm.Medicamento_id = m.Medicamento_id "
                             + "JOIN Doctor d ON t.Doctor_id = d.Doctor_id "
                             + "JOIN Paciente p ON t.Paciente_id = p.Paciente_id "
-                            + "WHERE p.Cedula = ?";
+                            + "WHERE p.Cedula = ? "
+                            + "GROUP BY t.Tratamiento_id, d.Nombre, d.Apellido";
             
             PreparedStatement st = con.prepareStatement(consulta);
             st.setInt(1, c); // Usar la cédula para buscar el Paciente_id
@@ -119,11 +124,12 @@ public class MedicinaController implements Initializable {
 
             while (rs.next()) {
                 String codigoTratamiento = rs.getString("Tratamiento_id");
-                String nombreMedicamento = rs.getString("nombreMedicamento");
+                String nombreMedicamentos = rs.getString("nombreMedicamentos");
                 String nombreDoctor = rs.getString("nombreDoctor");
+                String apellidoDoctor = rs.getString("apellidoDoctor");
 
                 // Agrega el registro completo a la lista
-                medicinasList.add(new Medicinas(codigoTratamiento, nombreMedicamento, nombreDoctor));
+                medicinasList.add(new Medicinas(codigoTratamiento, nombreMedicamentos, nombreDoctor, apellidoDoctor));
             }
         } catch (SQLException e) {
             e.printStackTrace();

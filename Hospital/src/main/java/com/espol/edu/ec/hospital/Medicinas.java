@@ -12,15 +12,16 @@ public class Medicinas {
     private String codigoTratamiento;
     private String nombreMedicamento;
     private String nombreDoctor;
+    private String apellidoDoctor;
 
-    public Medicinas(String codigoTratamiento, String nombreMedicamento, String nombreDoctor) {
+    public Medicinas(String codigoTratamiento, String nombreMedicamento, String nombreDoctor, String apellidoDoctor) {
         this.codigoTratamiento = codigoTratamiento;
         this.nombreMedicamento = nombreMedicamento;
         this.nombreDoctor = nombreDoctor;
+        this.apellidoDoctor = apellidoDoctor;
     }
 
-    // Getters y setters para cada atributo
-
+    // Getters y setters
     public String getCodigoTratamiento() {
         return codigoTratamiento;
     }
@@ -43,6 +44,14 @@ public class Medicinas {
 
     public void setNombreDoctor(String nombreDoctor) {
         this.nombreDoctor = nombreDoctor;
+    }
+
+    public String getApellidoDoctor() {
+        return apellidoDoctor;
+    }
+
+    public void setApellidoDoctor(String apellidoDoctor) {
+        this.apellidoDoctor = apellidoDoctor;
     }
 }
 

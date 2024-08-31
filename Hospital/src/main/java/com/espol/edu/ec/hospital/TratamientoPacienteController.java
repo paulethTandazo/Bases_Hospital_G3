@@ -47,41 +47,41 @@ public class TratamientoPacienteController {
         loadTratamientos();  // Carga los datos una vez que la cédula ha sido establecida
     }
 
-    @FXML
+   @FXML
     private void initialize() {
         if (TablaxTratamientos == null) {
-            TablaxTratamientos = new TableView<>();
-            
-            // Configuración de las columnas
-            TableColumn<Tratamiento, String> colCodigoTratamiento = new TableColumn<>("Código Tratamiento");
-            colCodigoTratamiento.setCellValueFactory(new PropertyValueFactory<>("codigoTratamiento"));
-            colCodigoTratamiento.setStyle("-fx-alignment: CENTER;");
-            
-            TableColumn<Tratamiento, String> colNombreDoctor = new TableColumn<>("Doctor");
-            colNombreDoctor.setCellValueFactory(new PropertyValueFactory<>("nombreDoctor"));
-            colNombreDoctor.setStyle("-fx-alignment: CENTER;");
-            
-            TableColumn<Tratamiento, String> colNombreDepartamento = new TableColumn<>("Departamento");
-            colNombreDepartamento.setCellValueFactory(new PropertyValueFactory<>("nombreDepartamento"));
-            colNombreDepartamento.setStyle("-fx-alignment: CENTER;");
-            
-            TableColumn<Tratamiento, String> colFechaInicio = new TableColumn<>("Fecha de Inicio");
-            colFechaInicio.setCellValueFactory(new PropertyValueFactory<>("fechaInicio"));
-            colFechaInicio.setStyle("-fx-alignment: CENTER;");
-            
-            TableColumn<Tratamiento, String> colFechaFin = new TableColumn<>("Fecha de Fin");
-            colFechaFin.setCellValueFactory(new PropertyValueFactory<>("fechaFin"));
-            colFechaFin.setStyle("-fx-alignment: CENTER;");
-            
-            // Agregar columnas al TableView
-            TablaxTratamientos.getColumns().addAll(colCodigoTratamiento, colNombreDoctor, colNombreDepartamento, colFechaInicio, colFechaFin);
-            
-            // Añadir el TableView al VBox
-            TratamientoPacienteVbox.getChildren().add(TablaxTratamientos);
-        }
+        TablaxTratamientos = new TableView<>();
+        
+        // Configuración de las columnas
+        TableColumn<Tratamiento, String> colCodigoTratamiento = new TableColumn<>("Código Tratamiento");
+        colCodigoTratamiento.setCellValueFactory(new PropertyValueFactory<>("codigoTratamiento"));
+        colCodigoTratamiento.setStyle("-fx-alignment: CENTER;");
+        
+        TableColumn<Tratamiento, String> colEnfermedad = new TableColumn<>("Enfermedad");
+        colEnfermedad.setCellValueFactory(new PropertyValueFactory<>("enfermedad"));
+        colEnfermedad.setStyle("-fx-alignment: CENTER;");
+        
+        TableColumn<Tratamiento, String> colNombreDoctor = new TableColumn<>("Nombre Doctor");
+        colNombreDoctor.setCellValueFactory(new PropertyValueFactory<>("nombreDoctor"));
+        colNombreDoctor.setStyle("-fx-alignment: CENTER;");
+        
+        TableColumn<Tratamiento, String> colApellidoDoctor = new TableColumn<>("Apellido Doctor");
+        colApellidoDoctor.setCellValueFactory(new PropertyValueFactory<>("apellidoDoctor"));
+        colApellidoDoctor.setStyle("-fx-alignment: CENTER;");
+        
+        // Nueva columna para el departamento
+        TableColumn<Tratamiento, String> colNombreDepartamento = new TableColumn<>("Departamento");
+        colNombreDepartamento.setCellValueFactory(new PropertyValueFactory<>("nombreDepartamento"));
+        colNombreDepartamento.setStyle("-fx-alignment: CENTER;");
+        
+        // Agregar columnas al TableView
+        TablaxTratamientos.getColumns().addAll(colCodigoTratamiento, colEnfermedad, colNombreDoctor, colApellidoDoctor, colNombreDepartamento);
+        
+        // Añadir el TableView al VBox
+        TratamientoPacienteVbox.getChildren().add(TablaxTratamientos);
     }
-
-    private void loadTratamientos() {
+    }
+private void loadTratamientos() {
         // Llenar la tabla con los datos
         TablaxTratamientos.setItems(getTratamientos(this.cedula));
     }
@@ -91,28 +91,29 @@ public class TratamientoPacienteController {
 
         // Conexión a la base de datos y obtención de datos
         try (Connection con = new ConexionSql().estableceConexion()) {
-            String consulta = "SELECT t.Tratamiento_id, d.Nombre AS nombreDoctor, dp.Nombre_Departamento AS nombreDepartamento, "
-                            + "t.Fecha_Inicio_Tratamiento, t.Fecha_Fin_Tratamiento "
+            String consulta = "SELECT t.Tratamiento_id, t.Enfermedad_a_tratar, d.Nombre AS nombreDoctor, d.Apellido AS apellidoDoctor, dp.Nombre_Departamento AS nombreDepartamento "
                             + "FROM Tratamiento t "
+                            + "JOIN Paciente p ON t.Paciente_id = p.Paciente_id "
                             + "JOIN Doctor d ON t.Doctor_id = d.Doctor_id "
                             + "JOIN DoctorxDepartamento dd ON d.Doctor_id = dd.Doctor_id "
                             + "JOIN Departamento dp ON dd.Departamento_id = dp.Departamento_id "
-                            + "JOIN Paciente p ON t.Paciente_id = p.Paciente_id "
+                            + "JOIN (SELECT Doctor_id, MIN(Departamento_id) AS Departamento_id FROM DoctorxDepartamento GROUP BY Doctor_id) dd_min "
+                            + "ON dd.Doctor_id = dd_min.Doctor_id AND dd.Departamento_id = dd_min.Departamento_id "
                             + "WHERE p.Cedula = ?";
-            
+
             PreparedStatement st = con.prepareStatement(consulta);
             st.setInt(1, c); // Usar la cédula para buscar el Paciente_id
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
                 String codigoTratamiento = rs.getString("Tratamiento_id");
+                String enfermedad = rs.getString("Enfermedad_a_tratar");
                 String nombreDoctor = rs.getString("nombreDoctor");
+                String apellidoDoctor = rs.getString("apellidoDoctor");
                 String nombreDepartamento = rs.getString("nombreDepartamento");
-                String fechaInicio = rs.getString("Fecha_Inicio_Tratamiento");
-                String fechaFin = rs.getString("Fecha_Fin_Tratamiento");
 
                 // Agrega el tratamiento completo a la lista
-                tratamientoList.add(new Tratamiento(codigoTratamiento, nombreDoctor, nombreDepartamento, fechaInicio, fechaFin));
+                tratamientoList.add(new Tratamiento(codigoTratamiento, enfermedad, nombreDoctor, apellidoDoctor, nombreDepartamento));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -68,7 +68,7 @@ public class DoctorLoginController implements Initializable{
                     Parent root = loader.load();
 
                     EntornoDoctorController controller = loader.getController();
-                    controller.setCedula(Integer.parseInt(Cedula.getText()));
+                    controller.setDoctor(Integer.parseInt(Cedula.getText()));
 
                     Stage stage = (Stage) PantallaDoctorBienvenida.getScene().getWindow();
                     stage.setScene(new Scene(root));

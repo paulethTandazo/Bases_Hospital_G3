@@ -108,21 +108,7 @@ public class TablasPacientesController {
         Platform.exit();
     }
 
-    @FXML
-    private void handleInformacion() {
-        try {
-            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
-            Parent root = pantallaDoctor.load();
-            EntornoDoctorController controller = pantallaDoctor.getController();
-            controller.setCedula(this.cedula);
-
-            Stage stage = (Stage) TablaDepartamento.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
-        }
-    }
+    
 
     @FXML
     private void handlePaciente() {

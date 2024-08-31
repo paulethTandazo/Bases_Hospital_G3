@@ -1,6 +1,8 @@
 package com.espol.edu.ec.hospital;
 
+import Departamento.Departamento;
 import Doctor.InformacionDoctor;
+import Paciente.InformacionPersonal;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +42,7 @@ import javafx.stage.Stage;
  */
 public class EntornoDoctorController {
 
-    private int cedula;
+    
     @FXML
     public GridPane infoGrid;
     @FXML
@@ -53,10 +55,25 @@ public class EntornoDoctorController {
     private TextField especializacionField;
     private TextField descripcionField;
     private TextField aniosExperienciaField;
-//Parte informacion de las especialidades 
+    private InformacionDoctor doctor;
+   
+   public void setDoctor(int cedula) {
+       this.doctor=InformacionDoctor.getDoctorByCedula(cedula);
+       System.out.println(doctor);
+       System.out.println("Cédula recibida: " + cedula);
+        
+    }
+    public void initialize() {
+         Platform.runLater(() -> {
+        if (doctor != null) {
+            infoGrid.getChildren().clear();         
+            NombreDoctor.getChildren().clear();
+            cargarDatosDoctor(doctor);
+        }
+    });
+    }
     
-    private boolean isEditing = false;
-    
+   //Inicio bloque especialidades
    private void cargarEspecialidades (){
     Label label1 = new Label("Tus Especialidades");
     VBox Espaciado = new VBox();
@@ -77,19 +94,9 @@ public class EntornoDoctorController {
             colEspecialidad.setStyle("-fx-alignment: CENTER;");
             TableColumn<InformacionDoctor, Integer> colAnios = new TableColumn<>("Años Experiencia");
             colAnios.setCellValueFactory(new PropertyValueFactory<>("aniosExperiencia"));
-            colAnios.setStyle("-fx-alignment: CENTER;");
-            Nuevo.setText("Nuevo");
-            estiloBoton(Nuevo, "Imagenes/boton-editar.png", "#FFFFFF", "#000000", true);
-            Editar.setText("Editar");
-            estiloBoton(Editar, "Imagenes/boton-editar.png", "#FFFFFF", "#000000", true);
-            Guardar.setText("Guardar");
-            estiloBoton(Guardar, "Imagenes/disquete.png", "#FFFFFF", "#000000", true);
+            colAnios.setStyle("-fx-alignment: CENTER;");           
             label1.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
             Espaciado.setSpacing(50);
-            grupoBotones.getChildren().addAll(Nuevo, Editar, Guardar);
-            grupoBotones.setStyle("-fx-alignment: CENTER;");
-            grupoBotones.setSpacing(50);
-            Espaciado.getChildren().add(grupoBotones);
             TablaxEspecialidades.getColumns().addAll(colCodigoDoctor, colNombre, colEspecialidad, colAnios);
             NombreDoctor.getChildren().addAll(label1, TablaxEspecialidades, Espaciado);
             NombreDoctor.setPadding(new Insets(10, 20, 10, 20));
@@ -98,6 +105,7 @@ public class EntornoDoctorController {
         // Llenar el TableView con datos
         TablaxEspecialidades.setItems(getEspecialidades());
    }
+   
     private ObservableList<InformacionDoctor> getEspecialidades() {
         ObservableList<InformacionDoctor> doctorList = FXCollections.observableArrayList();
 
@@ -109,11 +117,11 @@ public class EntornoDoctorController {
                     + "WHERE d.Cedula = ?";
 
             PreparedStatement st = con.prepareStatement(consulta);
-            st.setInt(1, this.cedula); // Usar la cédula para buscar el Doctor_id
+            st.setInt(1, doctor.getCedula()); // Usar la cédula para buscar el Doctor_id
             ResultSet rs = st.executeQuery();
 
             if (!rs.isBeforeFirst()) {
-                System.out.println("No se encontraron especialidades para la cédula: " + this.cedula);
+                System.out.println("No se encontraron especialidades para la cédula: " + doctor.getCedula());
             }
 
             while (rs.next()) {
@@ -131,34 +139,21 @@ public class EntornoDoctorController {
         return doctorList;
     }
     
-    
-    
-    public void setCedula(int cedula) {
-        this.cedula = cedula;
-        System.out.println("Cédula recibida: " + cedula); // Debug
-    }
-    
-
-    public void initialize() {
-        // Limpiar el GridPane y VBox antes de agregar elementos
-        InformacionDoctor doctor = InformacionDoctor.getDoctorByCedula(cedula);
-        cargarDatosDoctor(doctor);
-    }
-    
-    //Hacer todos los cambios en la misma pagina solo limpiando el Vbox NombreDoctor
-    @FXML
-    private void handleVolver() {
-        infoGrid.getChildren().clear();
+     @FXML
+    private void handleEspecialidad(){
+         infoGrid.getChildren().clear();
         NombreDoctor.getChildren().clear();
-        InformacionDoctor doctor = InformacionDoctor.getDoctorByCedula(cedula);
-        cargarDatosDoctor(doctor);
+         cargarEspecialidades ();
+         System.out.println("Entro especialidades");
     }
     
+    //...Fin bloque especialidades
+    //
+    //Inicio bloque información del doctor 
     private void cargarDatosDoctor(InformacionDoctor doctor){
         
         if (doctor != null) {
             bienvenidaLabel = new Label("Bienvenid@ de nuevo, " + doctor.getNombre());
-            System.out.println("ENTROOOOOO");
             bienvenidaLabel.setStyle("-fx-font-weight: bold;");
             ImageView imageView = createImageView("Imagenes/mujer.png");
             VBox avatar = new VBox(imageView);
@@ -186,14 +181,168 @@ public class EntornoDoctorController {
             infoGrid.add(buttonBox, 0, 6, 2, 1); // Colocar botones en la fila 7 y que abarquen dos columnas
             NombreDoctor.setStyle("-fx-alignment: CENTER;");
             NombreDoctor.getChildren().addAll(bienvenidaLabel, avatar, infoGrid);
+            NombreDoctor.setAlignment(Pos.CENTER);
             System.out.println("Datos del doctor cargados correctamente."); // Debug
         } else {
             System.out.println("Doctor no encontrado."); // Debug
         }
     }
+    //Función para volver a mostrar la información cuando se presione el boton
+    @FXML
+    private void handleVolver() {
+        infoGrid.getChildren().clear();
+        NombreDoctor.getChildren().clear();
+        cargarDatosDoctor(doctor);
+    }
     
-    
+    //...Fin Bloque doctor
+    //
+    //Inicio Bloque Mostrar Pacientes
+    @FXML
+    private void HandlePaciente(){
+    infoGrid.getChildren().clear();
+        NombreDoctor.getChildren().clear();
+         cargarPacientes ();
+         System.out.println("Entro especialidades");
+    };
+   private void cargarPacientes (){
+    Label label1 = new Label("Tus Pacientes");
+    VBox Espaciado = new VBox();
+    Button Nuevo = new Button();
+    Button Editar = new Button();
+    Button Guardar = new Button();
+            TableView<InformacionPersonal> TablaxEspecialidades = new TableView<>();
+            // Creando las columnas para llenar luego los datos
+            TableColumn<InformacionPersonal, String> colCodigoPaciente = new TableColumn<>("Código-Paciente");
+            colCodigoPaciente.setCellValueFactory(new PropertyValueFactory<>("Paciente_id"));
+            colCodigoPaciente.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionPersonal, String> colNombre = new TableColumn<>("Nombre");
+            colNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+            colNombre.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionPersonal, String> colApellido = new TableColumn<>("Apellido");
+            colApellido.setCellValueFactory(new PropertyValueFactory<>("Apellido"));
+            colApellido.setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionPersonal, Integer> colEdad = new TableColumn<>("Edad");
+            colEdad .setCellValueFactory(new PropertyValueFactory<>("Edad"));
+            colEdad .setStyle("-fx-alignment: CENTER;");
+            TableColumn<InformacionPersonal, Integer> colEnfermedad = new TableColumn<>("Enfermedad_a_tratar");
+            colEnfermedad.setCellValueFactory(new PropertyValueFactory<>("Enfermedad_a_tratar"));
+            colEnfermedad .setStyle("-fx-alignment: CENTER;");
+            estiloBoton(Guardar, "Imagenes/disquete.png", "#FFFFFF", "#000000", true);
+            label1.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
+            Espaciado.setSpacing(50);
+            TablaxEspecialidades.getColumns().addAll(colCodigoPaciente, colNombre, colApellido, colEdad ,colEnfermedad);
+            NombreDoctor.getChildren().addAll(label1, TablaxEspecialidades, Espaciado);
+            NombreDoctor.setPadding(new Insets(10, 20, 10, 20));
+            NombreDoctor.setSpacing(50);
+            System.out.println("realizo cambios");
+        // Llenar el TableView con datos
+        TablaxEspecialidades.setItems(getPacientes());
+   }
+   private ObservableList<InformacionPersonal> getPacientes() {
+        ObservableList<InformacionPersonal> pacienteList = FXCollections.observableArrayList();
 
+        // Conexión a la base de datos y obtención de datos
+        try (Connection con = new ConexionSql().estableceConexion()) {
+            String consulta ="SELECT t.Doctor_id, p.Paciente_id, p.Nombre, p.Apellido, p.Edad, t.Enfermedad_a_tratar " +
+                             "FROM Doctor d " +
+                             "JOIN Tratamiento t ON t.Doctor_id = d.Doctor_id " +
+                             "JOIN Paciente p ON p.Paciente_id = t.Paciente_id " +
+                              "WHERE d.Cedula = ? ";
+
+            PreparedStatement st = con.prepareStatement(consulta);
+            st.setInt(1, doctor.getCedula()); // Usar la cédula para buscar el Doctor_id
+            ResultSet rs = st.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron pacientes para la cédula: " + doctor.getCedula());
+            }
+
+            while (rs.next()) {
+                String Paciente_id = rs.getString("Paciente_id");
+                String Nombre = rs.getString("Nombre");
+                String Apellido= rs.getString("Apellido");
+                int edad = rs.getInt("Edad");
+                String Enfermedad_a_tratar= rs.getString("Enfermedad_a_tratar");
+                pacienteList.add(new InformacionPersonal(Paciente_id,Nombre,Apellido,edad,Enfermedad_a_tratar));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pacienteList;
+    }
+   
+   //Fin Bloque Mostrar Pacientes
+   //
+   //Inicio Bloque Mostrar Departamento
+   @FXML
+    private void HandleDepartamento(){
+    infoGrid.getChildren().clear();
+        NombreDoctor.getChildren().clear();
+         cargarDepartamentos ();
+         System.out.println("Entro especialidades");
+    };
+   private void cargarDepartamentos (){
+    Label label1 = new Label("Tus Departamentos");
+    VBox Espaciado = new VBox();
+    Button Nuevo = new Button();
+    Button Editar = new Button();
+    Button Guardar = new Button();
+            TableView<Departamento> TablaxEspecialidades = new TableView<>();
+            // Creando las columnas para llenar luego los datos
+            TableColumn<Departamento, String> colCodigoDepartamento = new TableColumn<>("Código-Departamento");
+            colCodigoDepartamento.setCellValueFactory(new PropertyValueFactory<>("Departamento_id"));
+            colCodigoDepartamento.setStyle("-fx-alignment: CENTER;");
+            TableColumn<Departamento, String> colNombre = new TableColumn<>("Nombre");
+            colNombre.setCellValueFactory(new PropertyValueFactory<>("nombreDepartamento"));
+            colNombre.setStyle("-fx-alignment: CENTER;");
+            TableColumn<Departamento, String> colLocalizacion = new TableColumn<>("Localizacion");
+            colLocalizacion.setCellValueFactory(new PropertyValueFactory<>("locazionDepartamento"));
+            colLocalizacion.setStyle("-fx-alignment: CENTER;");         
+            label1.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
+            Espaciado.setSpacing(50);
+            TablaxEspecialidades.getColumns().addAll(colCodigoDepartamento, colNombre, colLocalizacion);
+            NombreDoctor.getChildren().addAll(label1, TablaxEspecialidades, Espaciado);
+            NombreDoctor.setPadding(new Insets(10, 20, 10, 20));
+            NombreDoctor.setSpacing(50);
+            System.out.println("realizo cambios");
+        // Llenar el TableView con datos
+        TablaxEspecialidades.setItems(getDepartamentos());
+   }
+   private ObservableList<Departamento> getDepartamentos() {
+        ObservableList<Departamento> pacienteList = FXCollections.observableArrayList();
+
+        // Conexión a la base de datos y obtención de datos
+        try (Connection con = new ConexionSql().estableceConexion()) {
+            String consulta ="SELECT d.Doctor_id,dp.Departamento_id, dp.Nombre_Departamento,dp.Localizacion " +
+                             "FROM Doctor d " +
+                             "JOIN doctorxdepartamento dxp ON d.Doctor_id=dxp.Doctor_id  " +
+                             "JOIN departamento dp ON dp.Departamento_id=dxp.Departamento_id " +
+                              "WHERE d.Cedula = ? ";
+
+            PreparedStatement st = con.prepareStatement(consulta);
+            st.setInt(1, doctor.getCedula()); // Usar la cédula para buscar el Doctor_id
+            ResultSet rs = st.executeQuery();
+
+            if (!rs.isBeforeFirst()) {
+                System.out.println("No se encontraron pacientes para la cédula: " + doctor.getCedula());
+            }
+
+            while (rs.next()) {
+                String Departamento_id = rs.getString("Departamento_id");
+                String Nombre_departamento = rs.getString("Nombre_Departamento");
+                String Localizacion= rs.getString("Localizacion");
+                
+                pacienteList.add(new Departamento(Departamento_id,Nombre_departamento,Localizacion));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pacienteList;
+    }
+   //Fin Bloque Mostrar Departamento
     @FXML
     private void handleSalir() {
         Platform.exit();
@@ -247,7 +396,7 @@ public class EntornoDoctorController {
                 PreparedStatement psDoctor = con.prepareStatement(updateDoctorQuery);
                 psDoctor.setString(1, nombre);
                 psDoctor.setString(2, apellido);
-                psDoctor.setInt(3, cedula);
+                psDoctor.setInt(3, doctor.getCedula());
                 int rowsAffectedDoctor = psDoctor.executeUpdate();
 
                 // Obtener el ID de la especialización desde la tabla Experiencia
@@ -342,41 +491,6 @@ public class EntornoDoctorController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-    @FXML
-    private void HandlePaciente() {
-        try {
-            FXMLLoader pantallaDoctor = new FXMLLoader(getClass().getResource("TratamientoPacientes.fxml"));
-            Parent root = pantallaDoctor.load();
-            TratamientoPacientesController controller = pantallaDoctor.getController();
-            controller.setCedula(this.cedula);
-
-            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
-        }
-    }
-    @FXML
-    private void HandleDepartamento() {
-        try {
-            FXMLLoader pantallaDepartamento = new FXMLLoader(getClass().getResource("TablasPacientes.fxml"));
-            Parent root = pantallaDepartamento.load();
-            TablasPacientesController controller = pantallaDepartamento.getController();
-            controller.setCedula(this.cedula);
-
-            Stage stage = (Stage) NombreDoctor.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
-        }
-    }
-    @FXML
-    private void handleEspecialidad(){
-         infoGrid.getChildren().clear();
-        NombreDoctor.getChildren().clear();
-         cargarEspecialidades ();
-         System.out.println("entro");
-    }
+    
+      
 }

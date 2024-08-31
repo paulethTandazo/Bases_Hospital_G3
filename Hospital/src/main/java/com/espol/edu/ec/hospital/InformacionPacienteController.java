@@ -94,8 +94,9 @@ public class InformacionPacienteController {
             buttonBox.setPadding(new Insets(20, 0, 0, 0)); // Añadir espacio superior a los botones
             buttonBox.setAlignment(Pos.CENTER);
             infoGrid.add(buttonBox, 0, 6, 2, 1); // Colocar botones en la fila 7 y que abarquen dos columnas
-
+            infoGrid.setAlignment(Pos.CENTER);
             NombrePaciente.getChildren().addAll(bienvenidaLabel, avatar, infoGrid);
+            NombrePaciente.setAlignment(Pos.CENTER);
         }
     }
 

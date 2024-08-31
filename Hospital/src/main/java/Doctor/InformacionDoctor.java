@@ -28,7 +28,7 @@ public class InformacionDoctor {
     private String especializacion;
     private String DescripcionCargo;
     private int aniosExperiencia;
-
+    
 
     public InformacionDoctor(String Doctor_id, String especializacion_id, String especializacion, String DescripcionCargo, int aniosExperiencia) {
         this.Doctor_id = Doctor_id;

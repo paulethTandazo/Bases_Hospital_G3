@@ -41,22 +41,7 @@ public class TratamientoPacientesController {
      private void handleSalir(){
          Platform.exit();
      }
-     @FXML
-     private void handlePaginaDoctor(){
-          try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EntornoDoctor.fxml"));
-            Parent root = loader.load();
-
-            EntornoDoctorController controller = loader.getController();
-            controller.setCedula(this.cedula);
-
-            Stage stage = (Stage) VBOXPacientes.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
-        }
-     }
+    
       private void showErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(message);

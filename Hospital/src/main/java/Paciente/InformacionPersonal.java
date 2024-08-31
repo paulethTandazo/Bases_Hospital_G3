@@ -24,7 +24,7 @@ public class InformacionPersonal {
     private int edad;
     private String  Fcumpleanos;
     private String direccion;
-
+    private String Enfermedad_a_tratar;
     public InformacionPersonal(String Paciente_id, int Cedula, String contrasenia, String Nombre, String Apellido, int edad, String  Fcumpleanos, String direccion) {
         this.Paciente_id = Paciente_id;
         this.Cedula = Cedula;
@@ -36,6 +36,31 @@ public class InformacionPersonal {
         this.direccion = direccion;
     }
 
+    public InformacionPersonal(String Paciente_id, int Cedula, String contrasenia, String Nombre, String Apellido, int edad, String Fcumpleanos, String direccion, String Enfermedad_a_tratar) {
+        this.Paciente_id = Paciente_id;
+        this.Cedula = Cedula;
+        this.contrasenia = contrasenia;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+        this.edad = edad;
+        this.Fcumpleanos = Fcumpleanos;
+        this.direccion = direccion;
+        this.Enfermedad_a_tratar = Enfermedad_a_tratar;
+    }
+public InformacionPersonal(String Paciente_id, String Nombre, String Apellido, int edad,String Enfermedad_a_tratar) {
+        this.Paciente_id = Paciente_id;
+        this.Nombre = Nombre;
+        this.Apellido = Apellido;
+        this.edad = edad;
+        this.Enfermedad_a_tratar=Enfermedad_a_tratar;
+    }
+    
+public String getEnfermedad_a_tratar() {
+        return Enfermedad_a_tratar;
+    }
+    public void setEnfermedad_a_tratar(String Enfermedad_a_tratar) {
+        this.Enfermedad_a_tratar=Enfermedad_a_tratar;
+    }
 
     public int getCedula() {
         return Cedula;

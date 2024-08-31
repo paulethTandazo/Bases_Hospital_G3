@@ -23,8 +23,8 @@ public class ConexionSql {
             //pero es una de las formas para acceder a nuestra base de datos
             //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Grupo3_Hospital", "root", "admin");
             //comenten la linea 24 y pongan sus credencials de 
-            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Grupo3_Hospital", "root", "leomessi0209");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Grupo3_Hospital", "root", "admin");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Grupo3_Hospital", "1709cmc", "1709cmc_MM");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Grupo3_Hospital", "root", "admin");
 
             System.out.println("Se conecto a la base de datos");
         } catch (Exception e) {

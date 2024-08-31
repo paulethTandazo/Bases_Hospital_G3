@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,6 +38,7 @@ public class TratamientoPacienteController {
     private VBox TratamientoPacienteVbox;
 
     private int cedula;
+    private final Label titulo= new Label("Tus Tratamientos");
 
    private TableView<Tratamiento> TablaxTratamientos;
 
@@ -76,9 +78,9 @@ public class TratamientoPacienteController {
         
         // Agregar columnas al TableView
         TablaxTratamientos.getColumns().addAll(colCodigoTratamiento, colEnfermedad, colNombreDoctor, colApellidoDoctor, colNombreDepartamento);
-        
+        titulo.setStyle("-fx-font-weight: bold;fx-font-size:18px;");
         // Añadir el TableView al VBox
-        TratamientoPacienteVbox.getChildren().add(TablaxTratamientos);
+        TratamientoPacienteVbox.getChildren().addAll(titulo,TablaxTratamientos);
     }
     }
 private void loadTratamientos() {

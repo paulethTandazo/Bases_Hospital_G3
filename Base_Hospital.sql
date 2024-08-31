@@ -1,5 +1,6 @@
 CREATE DATABASE IF NOT EXISTS Grupo3_Hospital;
 USE Grupo3_Hospital;
+-- drop database Grupo3_Hospital;
 
 /*
 Creando la tabla Paciente
@@ -98,7 +99,7 @@ ALTER TABLE Especializacion
     MODIFY Especializacion_id CHAR(9) NOT NULL,
     MODIFY Doctor_id CHAR(9) NOT NULL,
     MODIFY nombre_de_especializacion VARCHAR(30) NOT NULL,
-    MODIFY Descripcion_Especializacion VARCHAR(50) NOT NULL,
+    MODIFY Descripcion_Especializacion VARCHAR(255) NOT NULL,
     MODIFY anios_experiencia INT NOT NULL;
 
 ALTER TABLE Especializacion ADD CONSTRAINT Fk_Doctor FOREIGN KEY(Doctor_id) REFERENCES Doctor(Doctor_id) ON DELETE CASCADE;
@@ -257,7 +258,7 @@ ALTER TABLE Factura ADD CONSTRAINT Pk_Factura PRIMARY KEY (Factura_id);
 ALTER TABLE Factura
     MODIFY Factura_id CHAR(9) NOT NULL,
     MODIFY Tratamiento_id CHAR(9) NOT NULL,
-    MODIFY Descripcion VARCHAR(45) NOT NULL,
+    MODIFY Descripcion VARCHAR(255) NOT NULL,
     MODIFY Fecha_emision DATE NOT NULL,
     MODIFY Monto_Total DOUBLE NOT NULL;
 
@@ -293,7 +294,7 @@ ALTER TABLE Medicamento
 	MODIFY Valor_Medicamento DECIMAL(10, 2) NOT NULL,
     MODIFY Nombre VARCHAR(45) NOT NULL,
     MODIFY Unidad VARCHAR(45) NOT NULL;
-    ALTER TABLE Medicamento RENAME TO Detalle_Prescripción_Medica;
+    -- ALTER TABLE Medicamento RENAME TO Detalle_Prescripción_Medica;
 
 
 /*
@@ -478,5 +479,5 @@ SELECT * FROM Especializacion WHERE Especializacion_id = 'SP0000001';
 select * from Paciente;
 select * from Doctor;
 select * from Especializacion;
-select * from Experiencia;
+-- select * from Experiencia;
 select * from Medicamento;

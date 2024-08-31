@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Optional;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -53,6 +54,8 @@ public class InformacionPacienteController {
 
     private int cedula;
     private boolean isEditing = false;
+    @FXML
+    private VBox InformacionPacienteVbox;
 
     public void setCedula(int cedula) {
         this.cedula = cedula;
@@ -115,7 +118,6 @@ public class InformacionPacienteController {
         return imageView;
     }
 
-    @FXML
     private void handleEditar() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     alert.setTitle("Confirmación de Edición");
@@ -136,7 +138,6 @@ public class InformacionPacienteController {
         direccionField.setEditable(true);
     }
 
- @FXML
 private void handleGuardar() {
     if (!isEditing) {
         showErrorAlert("No puedes guardar, primero necesitas actualizar los campos.");
@@ -205,9 +206,11 @@ private void handleGuardar() {
 
             TratamientoPacienteController controller = loader.getController();
             controller.setCedula(this.cedula);
+            
+            Scene scene = new Scene(root, 660, 520);  
 
             Stage stage = (Stage) NombrePaciente.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
@@ -243,5 +246,24 @@ private void handleGuardar() {
             button.setFont(Font.font("System", javafx.scene.text.FontWeight.BOLD, 12));
         }
         button.setTextFill(Color.web(textColor));
+    }
+
+    @FXML
+    private void handleMedicina(ActionEvent event) {
+                try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Medicina.fxml"));
+            Parent root = loader.load();
+
+            MedicinaController controller = loader.getController();
+            controller.setCedula(this.cedula);
+            
+             Scene scene = new Scene(root, 660, 520);  
+
+            Stage stage = (Stage) NombrePaciente.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            showErrorAlert("Error al cargar la vista de tratamiento: " + e.getMessage());
+        }
     }
 }

@@ -1,19 +1,22 @@
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\MedicamentoVentanaController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\EntornoDoctorController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\Paciente\Tratamiento.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\RegistrarsePacienteController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TipoUsuarioController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\App.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\EspecialidadesController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\ProbarConexion.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\Doctor\InformacionDoctor.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\InformacionPacienteController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\ConexionSql.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\DoctorLoginController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TablasPacientesController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TratamientoPacientesController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\Departamento\Departamento.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\module-info.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\PacienteLoginController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TratamientoPacienteController.java
-C:\Users\cesar\OneDrive\Escritorio\Bases_Hospital_G3\Bases_Hospital_G3\Hospital\src\main\java\Paciente\InformacionPersonal.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\ProbarConexion.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\DoctorLoginController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\Medicinas.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\module-info.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\InformacionPacienteController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TratamientoPacienteController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\Paciente\InformacionPersonal.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\Paciente\Tratamiento.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\App.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TipoUsuarioController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\MedicamentoVentanaController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\ConexionSql.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\Tratamiento.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\MedicinaController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\Departamento\Departamento.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\PacienteLoginController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\EspecialidadesController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\Doctor\InformacionDoctor.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\RegistrarsePacienteController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TratamientoPacientesController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\TablasPacientesController.java
+C:\Users\leoza\OneDrive - Escuela Superior Politécnica del Litoral\Escritorio\ESPOL\Tercer semestre\SIstema de Datos\Proyecto\Bases_Hospital_G3\Hospital\src\main\java\com\espol\edu\ec\hospital\EntornoDoctorController.java
